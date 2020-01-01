@@ -1,7 +1,12 @@
 package me.amryousef.apple.auth.firebase_apple_auth
 
-import androidx.annotation.NonNull;
+import android.app.Activity
+import androidx.annotation.NonNull
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.OAuthProvider
 import io.flutter.embedding.engine.plugins.FlutterPlugin
+import io.flutter.embedding.engine.plugins.activity.ActivityAware
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
@@ -9,37 +14,64 @@ import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.Registrar
 
 /** FirebaseAppleAuthPlugin */
-public class FirebaseAppleAuthPlugin: FlutterPlugin, MethodCallHandler {
-  override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-    val channel = MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "firebase_apple_auth")
-    channel.setMethodCallHandler(FirebaseAppleAuthPlugin());
-  }
+@Suppress("DEPRECATION")
+class FirebaseAppleAuthPlugin : FlutterPlugin, ActivityAware, MethodCallHandler {
 
-  // This static function is optional and equivalent to onAttachedToEngine. It supports the old
-  // pre-Flutter-1.12 Android projects. You are encouraged to continue supporting
-  // plugin registration via this function while apps migrate to use the new Android APIs
-  // post-flutter-1.12 via https://flutter.dev/go/android-project-migration.
-  //
-  // It is encouraged to share logic between onAttachedToEngine and registerWith to keep
-  // them functionally equivalent. Only one of onAttachedToEngine or registerWith will be called
-  // depending on the user's project. onAttachedToEngine or registerWith must both be defined
-  // in the same class.
-  companion object {
-    @JvmStatic
-    fun registerWith(registrar: Registrar) {
-      val channel = MethodChannel(registrar.messenger(), "firebase_apple_auth")
-      channel.setMethodCallHandler(FirebaseAppleAuthPlugin())
+    private var activity: Activity? = null
+
+    override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+        val channel = MethodChannel(flutterPluginBinding.flutterEngine.dartExecutor, "me.amryousef.apple.auth/firebase_apple_auth")
+        channel.setMethodCallHandler(this)
     }
-  }
 
-  override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-    if (call.method == "getPlatformVersion") {
-      result.success("Android ${android.os.Build.VERSION.RELEASE}")
-    } else {
-      result.notImplemented()
+    companion object {
+        @Suppress("unused")
+        @JvmStatic
+        fun registerWith(registrar: Registrar) {
+            val channel = MethodChannel(registrar.messenger(), "me.amryousef.apple.auth/firebase_apple_auth")
+            channel.setMethodCallHandler(FirebaseAppleAuthPlugin().apply { activity = registrar.activity() })
+        }
     }
-  }
 
-  override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
-  }
+    override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
+        val provider = OAuthProvider.newBuilder("apple.com")
+                .setScopes(listOf("email"))
+                .build()
+        activity?.let {
+            val auth = FirebaseAuth.getInstance()
+            val pending = auth.pendingAuthResult
+            @Suppress("IfThenToElvis")
+            if (pending != null) {
+                pending.addOnSuccessListener {
+                    result.success("")
+                }.addOnFailureListener {
+                    result.error("100", "Pending auth failed", null)
+                }
+            } else {
+                auth.startActivityForSignInWithProvider(it, provider).addOnSuccessListener {
+                    result.success("")
+                }.addOnFailureListener {
+                    result.error("200", "auth failed", null)
+                }
+            }
+
+        }
+    }
+
+    override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
+    }
+
+    override fun onDetachedFromActivity() {
+    }
+
+    override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
+        activity = binding.activity
+    }
+
+    override fun onAttachedToActivity(binding: ActivityPluginBinding) {
+        activity = binding.activity
+    }
+
+    override fun onDetachedFromActivityForConfigChanges() {
+    }
 }
