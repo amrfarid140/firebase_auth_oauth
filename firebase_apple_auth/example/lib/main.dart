@@ -10,7 +10,7 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   Future<void> initPlatformState() async {
     try {
-      await FirebaseAppleAuth.instance.openSignInFlow();
+      await FirebaseAppleAuth().openSignInFlow();
     } on PlatformException {
       debugPrint("Oh shit");
     }

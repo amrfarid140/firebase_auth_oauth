@@ -2,7 +2,7 @@ name: firebase_apple_auth
 description: A new flutter plugin project.
 version: 0.1.0
 author: Amr Yousef
-homepage: https://github.com/amrfarid140/firebase_apple_auth
+homepage: https://github.com/amrfarid140/firebase_apple_auth/firebase_apple_auth
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -10,6 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  firebase_apple_auth_platform_interface: ^0.1.0
   firebase_auth: ^0.15.3
   firebase_core: ^0.4.3+1
 
