@@ -10,7 +10,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_apple_auth_platform_interface: ^0.1.0
+  firebase_apple_auth_platform_interface:
+    path: ../firebase_apple_auth_platform_interface
+  firebase_apple_auth_web:
+    path: ../firebase_apple_auth_web
   firebase_auth: ^0.15.3
   firebase_core: ^0.4.3+1
 
@@ -19,7 +22,12 @@ dev_dependencies:
     sdk: flutter
 
 flutter:
-
   plugin:
-    androidPackage: me.amryousef.apple.auth.firebase_apple_auth
-    pluginClass: FirebaseAppleAuthPlugin
+    platforms:
+      android:
+        package: me.amryousef.apple.auth.firebase_apple_auth
+        pluginClass: FirebaseAppleAuthPlugin
+      ios:
+        pluginClass: FirebaseAppleAuthPlugin
+      web:
+        default_package: firebase_apple_auth_web

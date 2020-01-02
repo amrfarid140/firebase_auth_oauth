@@ -67,10 +67,17 @@ packages:
   firebase_apple_auth_platform_interface:
     dependency: "direct main"
     description:
-      name: firebase_apple_auth_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.0"
+      path: "../firebase_apple_auth_platform_interface"
+      relative: true
+    source: path
+    version: "0.1.0+1"
+  firebase_apple_auth_web:
+    dependency: "direct main"
+    description:
+      path: "../firebase_apple_auth_web"
+      relative: true
+    source: path
+    version: "0.0.1"
   firebase_auth:
     dependency: "direct main"
     description:
