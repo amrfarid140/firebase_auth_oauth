@@ -8,7 +8,6 @@ import 'package:flutter/services.dart';
 part 'method_channel_firebase_apple_auth.dart';
 
 class FirebaseAppleAuth {
-
   static FirebaseAppleAuth instance = MethodChannelFirebaseAppleAuth._();
   final FirebaseApp _app;
 

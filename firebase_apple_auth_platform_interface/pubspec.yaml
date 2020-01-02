@@ -1,6 +1,6 @@
 name: firebase_apple_auth_platform_interface
 description: Platform interface plugin for firebase_apple_auth. This includes API definition which will be implemented for android, ios and web.
-version: 0.1.0
+version: 0.1.0+1
 author: Amr Yousef <contact@amryousef.me>
 homepage: https://github.com/amrfarid140/firebase_apple_auth/firebase_apple_auth_platform_interface
 
