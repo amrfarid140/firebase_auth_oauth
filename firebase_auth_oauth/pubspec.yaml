@@ -1,0 +1,33 @@
+name: firebase_auth_oauth
+description: A new flutter plugin project.
+version: 0.1.0
+author: Amr Yousef
+homepage: https://github.com/amrfarid140/firebase_auth_oauth/firebase_auth_oauth
+
+environment:
+  sdk: ">=2.2.2 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  firebase_auth_oauth_platform_interface:
+    path: ../firebase_auth_oauth_platform_interface
+  firebase_auth_oauth_web:
+    path: ../firebase_auth_oauth_web
+  firebase_auth: ^0.15.3
+  firebase_core: ^0.4.3+1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: me.amryousef.apple.auth.firebase_apple_auth
+        pluginClass: FirebaseAppleAuthPlugin
+      ios:
+        pluginClass: FirebaseAppleAuthPlugin
+      web:
+        default_package: firebase_apple_auth_web
