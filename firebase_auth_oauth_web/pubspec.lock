@@ -65,7 +65,7 @@ packages:
     source: hosted
     version: "7.1.0"
   firebase_auth:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: firebase_auth
       url: "https://pub.dartlang.org"
@@ -74,9 +74,9 @@ packages:
   firebase_auth_oauth_platform_interface:
     dependency: "direct main"
     description:
-      path: "../firebase_auth_oauth_platform_interface"
-      relative: true
-    source: path
+      name: firebase_auth_oauth_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.1.0"
   firebase_auth_platform_interface:
     dependency: transitive
@@ -93,7 +93,7 @@ packages:
     source: hosted
     version: "0.1.1+1"
   firebase_core:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: firebase_core
       url: "https://pub.dartlang.org"

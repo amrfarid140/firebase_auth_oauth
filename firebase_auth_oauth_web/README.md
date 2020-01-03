@@ -1,14 +1,28 @@
-# firebase_apple_auth_web
+# firebase_auth_oauth_web
 
-A new flutter plugin project.
+Web implementation for `firebase_auth_oauth`
 
-## Getting Started
+## Usage
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+### Import the package
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+To use this plugin in your Flutter app on the web, simply add the base `firebase_auth_oauth` package as a
+dependency in your `pubspec.yaml`
+
+### Updating `index.html`
+
+Due to [this bug in dartdevc][2], you will need to manually add the Firebase
+JavaScript files to your `index.html` file.
+
+In your app directory, edit `web/index.html` to add the line:
+
+```html
+<html>
+    ...
+    <body>
+        <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-auth.js"></script>
+        <script src="main.dart.js"></script>
+    </body>
+</html>
+```
