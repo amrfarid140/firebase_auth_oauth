@@ -5,7 +5,7 @@ author: Amr Yousef <contact@amryousef.me>
 homepage: https://github.com/amrfarid140/firebase_apple_auth/firebase_apple_auth_platform_interface
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
   flutter:

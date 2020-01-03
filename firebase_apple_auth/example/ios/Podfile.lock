@@ -10,6 +10,8 @@ PODS:
   - firebase_apple_auth (0.0.1):
     - firebase_auth
     - Flutter
+  - firebase_apple_auth_web (0.0.1):
+    - Flutter
   - firebase_auth (0.0.1):
     - Firebase/Auth (~> 6.3)
     - Firebase/Core
@@ -91,6 +93,7 @@ PODS:
 
 DEPENDENCIES:
   - firebase_apple_auth (from `.symlinks/plugins/firebase_apple_auth/ios`)
+  - firebase_apple_auth_web (from `.symlinks/plugins/firebase_apple_auth_web/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_auth_web (from `.symlinks/plugins/firebase_auth_web/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
@@ -117,6 +120,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   firebase_apple_auth:
     :path: ".symlinks/plugins/firebase_apple_auth/ios"
+  firebase_apple_auth_web:
+    :path: ".symlinks/plugins/firebase_apple_auth_web/ios"
   firebase_auth:
     :path: ".symlinks/plugins/firebase_auth/ios"
   firebase_auth_web:
@@ -131,6 +136,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Firebase: 0219bb4782eb1406f1b9b0628a2e625484ce910d
   firebase_apple_auth: 9f30b342e7d6f26ce33852ba9271be01a74d16c3
+  firebase_apple_auth_web: 83e8a3db59f4d3d68b838f400ba897a16d0a5e84
   firebase_auth: 6838289663da45c488af0a82c246928588fcddc5
   firebase_auth_web: 0955c07bcc06e84af76b9d4e32e6f31518f2d7de
   firebase_core: 87e4c7cef68de46c0326ce2ee907fc7e365ead7e

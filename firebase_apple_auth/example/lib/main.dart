@@ -10,7 +10,8 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   Future<void> initPlatformState() async {
     try {
-      await FirebaseAppleAuth().openSignInFlow();
+      await FirebaseAppleAuth()
+          .openSignInFlow("apple.com", ["email"], {"locale": "en"});
     } on PlatformException {
       debugPrint("Oh shit");
     }
@@ -30,7 +31,6 @@ class MyApp extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.all(10),
-
               child: StreamBuilder(
                   initialData: null,
                   stream: FirebaseAuth.instance.onAuthStateChanged,
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
                       AsyncSnapshot<FirebaseUser> snapshot) {
                     return RaisedButton(
                       onPressed: () async {
-                        if(snapshot.data != null) {
+                        if (snapshot.data != null) {
                           await FirebaseAuth.instance.signOut();
                         } else {
                           await initPlatformState();
@@ -47,7 +47,6 @@ class MyApp extends StatelessWidget {
                       child: Text(snapshot.data != null ? "Logout" : "Login"),
                     );
                   }),
-
             )
           ],
         ),

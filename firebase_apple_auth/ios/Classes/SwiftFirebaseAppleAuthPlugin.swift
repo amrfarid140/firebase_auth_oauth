@@ -6,43 +6,120 @@ import FirebaseAuth
 
 public class SwiftFirebaseAppleAuthPlugin: UIViewController, FlutterPlugin, ASAuthorizationControllerDelegate {
 	
+	private var currentNonce: String?
+	var result: FlutterResult?
+	var arguments: [String: String]?
+	
 	public static func register(with registrar: FlutterPluginRegistrar) {
 		let channel = FlutterMethodChannel(name: "me.amryousef.apple.auth/firebase_apple_auth", binaryMessenger: registrar.messenger())
 		let instance = SwiftFirebaseAppleAuthPlugin()
 		registrar.addMethodCallDelegate(instance, channel: channel)
 	}
 	
-	private var currentNonce: String?
-	private var result: FlutterResult?
-	
 	public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+		if let arguments = call.arguments as? [String:String] {
+			let provider = arguments["provider"]
+			if (provider == "apple.com") {
+				signInWithApple(arguments: arguments, result: result)
+			} else {
+				oAuthSignIn(arguments: arguments, result: result)
+			}
+		} else {
+			fatalError("no call arguments found")
+		}
+	}
+	
+	private func oAuthSignIn(arguments: [String: String], result: @escaping FlutterResult) {
+		guard let providerId = arguments["provider"] else {
+			fatalError("provider can't be nil")
+		}
+		let provider = OAuthProvider(providerID: providerId)
+		guard let scopesString = arguments["scopes"] else {
+			fatalError("scopes can't be nil")
+		}
+		let parametersString = arguments["parameters"]
+		do {
+			if let data = scopesString.data(using: .utf8) {
+				if let jsonArray = try JSONSerialization.jsonObject(with: data, options : .allowFragments) as? [String]
+				{
+					provider.scopes = jsonArray
+				} else {
+					fatalError("Invalid scopes list")
+				}
+				
+			} else {
+				fatalError("Scopes not defined")
+			}
+			
+			if let data = parametersString?.data(using: .utf8) {
+				if let jsonObject = try JSONSerialization.jsonObject(with: data, options : .allowFragments) as? Dictionary<String, String>
+				{
+					provider.customParameters = jsonObject
+				}
+			}
+			provider.getCredentialWith(nil) { credential, error in
+				if error != nil {
+					result(FlutterError.init(code: "200", message: error?.localizedDescription, details: nil))
+				}
+				if credential != nil {
+					Auth.auth().signIn(with: credential!) { authResult, error in
+						if error != nil {
+							result(FlutterError.init(code: "100", message: error?.localizedDescription, details: nil))
+						}
+						// User is signed in.
+						result("")
+					}
+				}
+			}
+			
+		}catch let error as NSError {
+			fatalError(error.localizedDescription)
+		}
+	}
+	
+	private func signInWithApple(arguments: [String: String], result: @escaping FlutterResult) {
 		if #available(iOS 13, *) {
 			self.result = result
-			signIn()
+			self.arguments = arguments
+			self.startSignInWithAppleFlow()
 		} else {
 			fatalError("This is only available on iOS 13")
 		}
+	}
 		
-	}
-	
-	@available(iOS 13, *)
-	private func signIn() {
-		startSignInWithAppleFlow()
-	}
-	
 	@available(iOS 13, *)
 	func startSignInWithAppleFlow() {
-		let nonce = randomNonceString()
-		let appleIDProvider = ASAuthorizationAppleIDProvider()
-		let request = appleIDProvider.createRequest()
-		request.requestedOperation = .operationLogin
-		request.requestedScopes = [.email]
-		request.nonce = sha256(nonce)
-		currentNonce = nonce
-		let authorizationController = ASAuthorizationController(authorizationRequests: [request])
-		authorizationController.delegate = self
-		authorizationController.presentationContextProvider = self as? ASAuthorizationControllerPresentationContextProviding
-		authorizationController.performRequests()
+		do {
+			let nonce = randomNonceString()
+			let appleIDProvider = ASAuthorizationAppleIDProvider()
+			let request = appleIDProvider.createRequest()
+			request.requestedOperation = .operationLogin
+			if let data = arguments!["scopes"]!.data(using: .utf8) {
+				if let jsonArray = try JSONSerialization.jsonObject(with: data, options : .allowFragments) as? [String]
+				{
+					request.requestedScopes = jsonArray.map({
+						(scope) -> ASAuthorization.Scope in
+						if(scope == "email") {return .email}
+						else if(scope == "fullName") {return .fullName}
+						else {fatalError("Unsupported scope " + scope)}
+					})
+				} else {
+					print("Invalid scopes list")
+				}
+				
+			} else {
+				fatalError("Scopes not defined")
+			}
+			
+			request.nonce = sha256(nonce)
+			currentNonce = nonce
+			let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+			authorizationController.delegate = self
+			authorizationController.presentationContextProvider = self as? ASAuthorizationControllerPresentationContextProviding
+			authorizationController.performRequests()
+		} catch let error as NSError {
+			fatalError(error.localizedDescription)
+		}
 	}
 	
 	@available(iOS 13, *)
@@ -96,27 +173,20 @@ public class SwiftFirebaseAppleAuthPlugin: UIViewController, FlutterPlugin, ASAu
 				fatalError("Invalid state: A login callback was received, but no login request was sent.")
 			}
 			guard let appleIDToken = appleIDCredential.identityToken else {
-				print("Unable to fetch identity token")
-				return
+				fatalError("Invalid appleIDToken")
 			}
 			guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
-				print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
-				return
+				fatalError("Invalid idTokenString")
 			}
-			// Initialize a Firebase credential.
 			let credential = OAuthProvider.credential(withProviderID: "apple.com",
 													  idToken: idTokenString,
 													  rawNonce: nonce)
-			// Sign in with Firebase.
 			Auth.auth().signIn(with: credential) { (authResult, error) in
 				if (error != nil) {
-					// Error. If error.code == .MissingOrInvalidNonce, make sure
-					// you're sending the SHA256-hashed nonce as a hex string with
-					// your request to Apple.
-					print(error?.localizedDescription ?? "Error in firebase sign in")
-					self.result!(FlutterError.init(code: "100", message: "Faild to sign in with Firebase", details: nil))
+					self.result!(FlutterError.init(code: "100", message: error?.localizedDescription, details: nil))
 					return
 				}
+				// User is signed in.
 				self.result!("")
 			}
 		}
@@ -124,7 +194,8 @@ public class SwiftFirebaseAppleAuthPlugin: UIViewController, FlutterPlugin, ASAu
 	
 	@available(iOS 13.0, *)
 	public func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-		self.result!(FlutterError.init(code: "200", message: "Faild to sign in with Apple", details: nil))
-		print("Sign in with Apple errored: \(error)")
+		self.result!(FlutterError.init(code: "200", message: error.localizedDescription, details: nil))
 	}
+	
+	
 }

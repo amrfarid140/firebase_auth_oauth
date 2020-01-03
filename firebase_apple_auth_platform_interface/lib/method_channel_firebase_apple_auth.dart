@@ -1,14 +1,25 @@
 part of firebase_apple_auth_platform_interface;
 
 class MethodChannelFirebaseAppleAuth extends FirebaseAppleAuth {
+  final FirebaseApp _app;
+
   static const MethodChannel _channel =
       const MethodChannel('me.amryousef.apple.auth/firebase_apple_auth');
 
-  MethodChannelFirebaseAppleAuth._({FirebaseApp app}) : super._(app: app);
+  MethodChannelFirebaseAppleAuth._({FirebaseApp app})
+      : _app = app ?? FirebaseApp.instance,
+        super._();
 
   @override
-  Future<FirebaseUser> openSignInFlow() async {
-    await _channel.invokeMethod("openSignInFlow", {'app': _app.name});
+  Future<FirebaseUser> openSignInFlow(String provider, List<String> scopes,
+      [Map<String, String> customOAuthParameters]) async {
+    await _channel.invokeMethod("openSignInFlow", {
+      'provider': provider,
+      'app': _app.name,
+      'scopes': json.encode(scopes),
+      if (customOAuthParameters != null)
+        'parameters': json.encode(customOAuthParameters)
+    });
     return FirebaseAuth.fromApp(_app).currentUser();
   }
 }
