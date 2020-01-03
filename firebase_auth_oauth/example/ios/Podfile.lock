@@ -1,4 +1,5 @@
 PODS:
+  - CryptoKit (0.4.0)
   - Firebase/Auth (6.14.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 6.4.1)
@@ -12,6 +13,7 @@ PODS:
     - Firebase/Core
     - Flutter
   - firebase_auth_oauth (0.0.1):
+    - CryptoKit (~> 0.4)
     - firebase_auth
     - Flutter
   - firebase_auth_oauth_web (0.0.1):
@@ -102,6 +104,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - CryptoKit
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -134,9 +137,10 @@ EXTERNAL SOURCES:
     :path: Flutter
 
 SPEC CHECKSUMS:
+  CryptoKit: 778b0eb14434535f70fd1037b297841dd83e3c37
   Firebase: 0219bb4782eb1406f1b9b0628a2e625484ce910d
   firebase_auth: 6838289663da45c488af0a82c246928588fcddc5
-  firebase_auth_oauth: 5ac125b9486a491ad2d60b4a60ae43e7ea602b8e
+  firebase_auth_oauth: e8041e29e7004b8656784c64b367e94ea97c1010
   firebase_auth_oauth_web: 9247a375ad778192b12f6685e4254b477e048867
   firebase_auth_web: 0955c07bcc06e84af76b9d4e32e6f31518f2d7de
   firebase_core: 87e4c7cef68de46c0326ce2ee907fc7e365ead7e
@@ -156,6 +160,6 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 43b8b64263023d4f32caa0b40f4c8bfa3c5f36d8
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
 
-PODFILE CHECKSUM: 1b66dae606f75376c5f2135a8290850eeb09ae83
+PODFILE CHECKSUM: e45c292f618eeca3034958d33b444b6e1249b55f
 
 COCOAPODS: 1.8.4

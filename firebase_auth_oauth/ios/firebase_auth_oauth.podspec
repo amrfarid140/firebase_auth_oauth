@@ -16,9 +16,10 @@ A new flutter plugin project.
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
   s.dependency 'firebase_auth'
-  s.framework= 'AuthenticationServices'
+  s.dependency 'CryptoKit', '~> 0.4'
+  s.framework = 'AuthenticationServices'
   s.static_framework = true
-  s.platform = :ios, '8.0'
+  s.platform = :ios, '9.0'
 
   # Flutter.framework does not contain a i386 slice. Only x86_64 simulators are supported.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'VALID_ARCHS[sdk=iphonesimulator*]' => 'x86_64' }
