@@ -1,17 +1,17 @@
 import 'package:firebase/firebase.dart' as web;
-import 'package:firebase_apple_auth_platform_interface/firebase_apple_auth_platform_interface.dart';
+import 'package:firebase_auth_oauth_platform_interface/firebase_auth_oauth_platform_interface.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
-class FirebaseAppleAuthWeb implements FirebaseAppleAuth {
+class FirebaseAuthOAuthWeb implements FirebaseAuthOAuth {
   final FirebaseApp _app;
 
   static void registerWith(Registrar registrar) {
-    FirebaseAppleAuth.instance = FirebaseAppleAuthWeb._();
+    FirebaseAuthOAuth.instance = FirebaseAuthOAuthWeb._();
   }
 
-  FirebaseAppleAuthWeb._({FirebaseApp app})
+  FirebaseAuthOAuthWeb._({FirebaseApp app})
       : _app = app ?? FirebaseApp.instance;
 
   @override
@@ -27,6 +27,6 @@ class FirebaseAppleAuthWeb implements FirebaseAppleAuth {
   }
 
   @override
-  FirebaseAppleAuth withApp(FirebaseApp app) =>
-      FirebaseAppleAuthWeb._(app: app);
+  FirebaseAuthOAuth withApp(FirebaseApp app) =>
+      FirebaseAuthOAuthWeb._(app: app);
 }

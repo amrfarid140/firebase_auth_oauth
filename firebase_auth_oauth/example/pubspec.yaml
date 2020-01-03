@@ -19,7 +19,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  firebase_apple_auth:
+  firebase_auth_oauth:
     path: ../
 
 # For information on the generic Dart part of this file, see the

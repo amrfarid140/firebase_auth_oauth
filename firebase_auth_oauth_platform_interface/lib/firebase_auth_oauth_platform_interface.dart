@@ -6,19 +6,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 
-part 'method_channel_firebase_apple_auth.dart';
+part 'method_channel_firebase_auth_oauth.dart';
 
-class FirebaseAppleAuth {
-  static FirebaseAppleAuth instance = MethodChannelFirebaseAppleAuth._();
+class FirebaseAuthOAuth {
+  static FirebaseAuthOAuth instance = MethodChannelFirebaseAuthOAuth._();
 
-  FirebaseAppleAuth._();
+  FirebaseAuthOAuth._();
 
   Future<FirebaseUser> openSignInFlow(String provider, List<String> scopes,
       [Map<String, String> customOAuthParameters]) async {
     throw UnimplementedError("openSignInFlow() is not implemeneted");
   }
 
-  FirebaseAppleAuth withApp(FirebaseApp app) {
+  FirebaseAuthOAuth withApp(FirebaseApp app) {
     throw UnimplementedError("withApp() is not implemeneted");
   }
 }

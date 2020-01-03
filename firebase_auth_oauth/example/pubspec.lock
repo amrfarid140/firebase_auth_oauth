@@ -71,27 +71,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "7.1.0"
-  firebase_apple_auth:
-    dependency: "direct dev"
-    description:
-      path: ".."
-      relative: true
-    source: path
-    version: "0.1.0"
-  firebase_apple_auth_platform_interface:
-    dependency: transitive
-    description:
-      path: "../../firebase_apple_auth_platform_interface"
-      relative: true
-    source: path
-    version: "0.1.0+1"
-  firebase_apple_auth_web:
-    dependency: transitive
-    description:
-      path: "../../firebase_apple_auth_web"
-      relative: true
-    source: path
-    version: "0.0.1"
   firebase_auth:
     dependency: "direct main"
     description:
@@ -99,6 +78,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.15.3"
+  firebase_auth_oauth:
+    dependency: "direct dev"
+    description:
+      path: ".."
+      relative: true
+    source: path
+    version: "0.1.0"
+  firebase_auth_oauth_platform_interface:
+    dependency: transitive
+    description:
+      path: "../../firebase_auth_oauth_platform_interface"
+      relative: true
+    source: path
+    version: "0.1.0"
+  firebase_auth_oauth_web:
+    dependency: transitive
+    description:
+      path: "../../firebase_auth_oauth_web"
+      relative: true
+    source: path
+    version: "0.1.0"
   firebase_auth_platform_interface:
     dependency: transitive
     description:
