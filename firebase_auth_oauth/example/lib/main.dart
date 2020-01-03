@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:firebase_auth_oauth/firebase_apple_auth.dart';
+import 'package:firebase_auth_oauth/firebase_auth_oauth.dart';
 
 void main() => runApp(MyApp());
 
