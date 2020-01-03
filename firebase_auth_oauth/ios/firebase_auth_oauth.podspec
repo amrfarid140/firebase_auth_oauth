@@ -1,9 +1,9 @@
 #
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
-# Run `pod lib lint firebase_apple_auth.podspec' to validate before publishing.
+# Run `pod lib lint firebase_auth_oauth.podspec' to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'firebase_apple_auth'
+  s.name             = 'firebase_auth_oauth'
   s.version          = '0.0.1'
   s.summary          = 'A new flutter plugin project.'
   s.description      = <<-DESC
@@ -15,9 +15,9 @@ A new flutter plugin project.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-	s.dependency 'firebase_auth'
-	s.framework= 'AuthenticationServices'
-	s.static_framework = true
+  s.dependency 'firebase_auth'
+  s.framework= 'AuthenticationServices'
+  s.static_framework = true
   s.platform = :ios, '8.0'
 
   # Flutter.framework does not contain a i386 slice. Only x86_64 simulators are supported.

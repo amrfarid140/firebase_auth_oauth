@@ -1,9 +1,9 @@
 #
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
-# Run `pod lib lint firebase_apple_auth_web.podspec' to validate before publishing.
+# Run `pod lib lint firebase_auth_oauth_web.podspec' to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'firebase_apple_auth_web'
+  s.name             = 'firebase_auth_oauth_web'
   s.version          = '0.0.1'
   s.summary          = 'A new flutter plugin project.'
   s.description      = <<-DESC

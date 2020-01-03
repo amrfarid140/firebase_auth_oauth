@@ -10,10 +10,10 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   Future<void> initPlatformState() async {
     try {
-      await FirebaseAppleAuth()
+      await FirebaseAuthOAuth()
           .openSignInFlow("apple.com", ["email"], {"locale": "en"});
     } on PlatformException {
-      debugPrint("Oh shit");
+      debugPrint("error logging in");
     }
   }
 
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         body: Column(
           children: <Widget>[
             Center(
-              child: Text('Running on fumes\n'),
+              child: Text('Running example'),
             ),
             Padding(
               padding: EdgeInsets.all(10),

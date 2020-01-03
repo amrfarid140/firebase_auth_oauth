@@ -7,14 +7,14 @@ PODS:
     - FirebaseAnalytics (= 6.1.7)
   - Firebase/CoreOnly (6.14.0):
     - FirebaseCore (= 6.5.0)
-  - firebase_apple_auth (0.0.1):
-    - firebase_auth
-    - Flutter
-  - firebase_apple_auth_web (0.0.1):
-    - Flutter
   - firebase_auth (0.0.1):
     - Firebase/Auth (~> 6.3)
     - Firebase/Core
+    - Flutter
+  - firebase_auth_oauth (0.0.1):
+    - firebase_auth
+    - Flutter
+  - firebase_auth_oauth_web (0.0.1):
     - Flutter
   - firebase_auth_web (0.1.0):
     - Flutter
@@ -92,9 +92,9 @@ PODS:
   - nanopb/encode (0.3.9011)
 
 DEPENDENCIES:
-  - firebase_apple_auth (from `.symlinks/plugins/firebase_apple_auth/ios`)
-  - firebase_apple_auth_web (from `.symlinks/plugins/firebase_apple_auth_web/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
+  - firebase_auth_oauth (from `.symlinks/plugins/firebase_auth_oauth/ios`)
+  - firebase_auth_oauth_web (from `.symlinks/plugins/firebase_auth_oauth_web/ios`)
   - firebase_auth_web (from `.symlinks/plugins/firebase_auth_web/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_core_web (from `.symlinks/plugins/firebase_core_web/ios`)
@@ -118,12 +118,12 @@ SPEC REPOS:
     - nanopb
 
 EXTERNAL SOURCES:
-  firebase_apple_auth:
-    :path: ".symlinks/plugins/firebase_apple_auth/ios"
-  firebase_apple_auth_web:
-    :path: ".symlinks/plugins/firebase_apple_auth_web/ios"
   firebase_auth:
     :path: ".symlinks/plugins/firebase_auth/ios"
+  firebase_auth_oauth:
+    :path: ".symlinks/plugins/firebase_auth_oauth/ios"
+  firebase_auth_oauth_web:
+    :path: ".symlinks/plugins/firebase_auth_oauth_web/ios"
   firebase_auth_web:
     :path: ".symlinks/plugins/firebase_auth_web/ios"
   firebase_core:
@@ -135,9 +135,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Firebase: 0219bb4782eb1406f1b9b0628a2e625484ce910d
-  firebase_apple_auth: 9f30b342e7d6f26ce33852ba9271be01a74d16c3
-  firebase_apple_auth_web: 83e8a3db59f4d3d68b838f400ba897a16d0a5e84
   firebase_auth: 6838289663da45c488af0a82c246928588fcddc5
+  firebase_auth_oauth: 5ac125b9486a491ad2d60b4a60ae43e7ea602b8e
+  firebase_auth_oauth_web: 9247a375ad778192b12f6685e4254b477e048867
   firebase_auth_web: 0955c07bcc06e84af76b9d4e32e6f31518f2d7de
   firebase_core: 87e4c7cef68de46c0326ce2ee907fc7e365ead7e
   firebase_core_web: d501d8b946b60c8af265428ce483b0fff5ad52d1

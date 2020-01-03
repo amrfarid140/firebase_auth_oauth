@@ -5,10 +5,10 @@ import 'package:firebase_auth_oauth_platform_interface/firebase_auth_oauth_platf
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-class FirebaseAppleAuth implements platform.FirebaseAuthOAuth {
+class FirebaseAuthOAuth implements platform.FirebaseAuthOAuth {
   final platform.FirebaseAuthOAuth _delegate;
 
-  FirebaseAppleAuth({FirebaseApp app})
+  FirebaseAuthOAuth({FirebaseApp app})
       : _delegate = app != null
             ? platform.FirebaseAuthOAuth.instance.withApp(app)
             : platform.FirebaseAuthOAuth.instance;
@@ -20,5 +20,5 @@ class FirebaseAppleAuth implements platform.FirebaseAuthOAuth {
 
   @override
   platform.FirebaseAuthOAuth withApp(FirebaseApp app) =>
-      FirebaseAppleAuth(app: app);
+      FirebaseAuthOAuth(app: app);
 }
