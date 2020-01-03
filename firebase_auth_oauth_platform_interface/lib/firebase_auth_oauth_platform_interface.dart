@@ -8,16 +8,22 @@ import 'package:flutter/services.dart';
 
 part 'method_channel_firebase_auth_oauth.dart';
 
+/// Platform interface definition of [FirebaseAuthOAuth]
 class FirebaseAuthOAuth {
+  /// Default instance if [FirebaseAuthOAuth]
   static FirebaseAuthOAuth instance = MethodChannelFirebaseAuthOAuth._();
 
   FirebaseAuthOAuth._();
 
+  ///Starts a OAuth sign-in flow for [provider]
+  /// using Firebase. The instance of FirebaseAuth will be from the default Firebase App
+  /// Unless [withApp] is used to build an instance
   Future<FirebaseUser> openSignInFlow(String provider, List<String> scopes,
       [Map<String, String> customOAuthParameters]) async {
     throw UnimplementedError("openSignInFlow() is not implemeneted");
   }
 
+  /// Builds an instance of [FirebaseAuthOAuth] using a [FirebaseApp] instance
   FirebaseAuthOAuth withApp(FirebaseApp app) {
     throw UnimplementedError("withApp() is not implemeneted");
   }

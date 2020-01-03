@@ -1,5 +1,6 @@
 part of firebase_apple_auth_platform_interface;
 
+/// Method channel implementation of [FirebaseAuthOAuth]
 class MethodChannelFirebaseAuthOAuth extends FirebaseAuthOAuth {
   final FirebaseApp _app;
 
@@ -22,4 +23,8 @@ class MethodChannelFirebaseAuthOAuth extends FirebaseAuthOAuth {
     });
     return FirebaseAuth.fromApp(_app).currentUser();
   }
+
+  @override
+  FirebaseAuthOAuth withApp(FirebaseApp app) =>
+      MethodChannelFirebaseAuthOAuth._(app: app);
 }
