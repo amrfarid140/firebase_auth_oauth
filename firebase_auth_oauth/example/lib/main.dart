@@ -1,14 +1,14 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:flutter/services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth_oauth/firebase_auth_oauth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  Future<void> initPlatformState() async {
+  Future<void> performSignIn() async {
     try {
       await FirebaseAuthOAuth()
           .openSignInFlow("apple.com", ["email"], {"locale": "en"});
@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
                         if (snapshot.data != null) {
                           await FirebaseAuth.instance.signOut();
                         } else {
-                          await initPlatformState();
+                          await performSignIn();
                         }
                       },
                       child: Text(snapshot.data != null ? "Logout" : "Login"),
