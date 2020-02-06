@@ -1,3 +1,11 @@
+## 0.1.0+5
+
+* Use Firebase version 0.15.4
+
+## 0.1.0+4
+
+* Updated Firebase version
+
 ## 0.1.0+3
 
 * Updated example
