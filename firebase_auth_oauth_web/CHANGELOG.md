@@ -1,3 +1,7 @@
+## 0.1.0+5
+
+* Downgraded Firebase version 0.15.3
+
 ## 0.1.0+4
 
 * Use Firebase version 0.15.4

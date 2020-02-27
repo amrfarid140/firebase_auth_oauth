@@ -139,11 +139,11 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   CryptoKit: 778b0eb14434535f70fd1037b297841dd83e3c37
   Firebase: 0219bb4782eb1406f1b9b0628a2e625484ce910d
-  firebase_auth: 6838289663da45c488af0a82c246928588fcddc5
+  firebase_auth: 1f46484071219159ad6c64d304af425ad7373052
   firebase_auth_oauth: e8041e29e7004b8656784c64b367e94ea97c1010
   firebase_auth_oauth_web: 9247a375ad778192b12f6685e4254b477e048867
   firebase_auth_web: 0955c07bcc06e84af76b9d4e32e6f31518f2d7de
-  firebase_core: 87e4c7cef68de46c0326ce2ee907fc7e365ead7e
+  firebase_core: dc539d4bdc69894823e4a6e557034a9e48960f21
   firebase_core_web: d501d8b946b60c8af265428ce483b0fff5ad52d1
   FirebaseAnalytics: f68b9f3f1241385129ae0a83b63627fc420c05e5
   FirebaseAuth: 831577b184ecaba38bc886768c1c22a450cc44e3

@@ -1,6 +1,6 @@
 name: firebase_auth_oauth_web
 description: Web implementation for `firebase_auth_oauth`
-version: 0.1.0+4
+version: 0.1.0+5
 author: Amr Yousef <contact@amryousef.me>
 homepage: https://github.com/amrfarid140/firebase_auth_oauth/tree/master/firebase_auth_oauth_web
 
@@ -12,10 +12,10 @@ dependencies:
     sdk: flutter
   flutter_web_plugins:
     sdk: flutter
-  firebase_auth_oauth_platform_interface: ^0.1.0+2
+  firebase_auth_oauth_platform_interface: ^0.1.0+3
   firebase: ^7.0.0
   js: ^0.6.1
-  firebase_auth: ^0.15.4
+  firebase_auth: ^0.15.3
   firebase_core: ^0.4.3+3
 
 dev_dependencies:
