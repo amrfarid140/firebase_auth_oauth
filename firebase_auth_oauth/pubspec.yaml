@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_auth_oauth_platform_interface: ^0.1.0+3
+  firebase_auth_oauth_platform_interface: ^0.1.0+4
   firebase_auth_oauth_web: ^0.1.0+6
   firebase_auth: ^0.16.0
   firebase_core: ^0.4.3+3
