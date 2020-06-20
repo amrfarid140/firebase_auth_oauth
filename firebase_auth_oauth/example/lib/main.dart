@@ -12,8 +12,14 @@ class MyApp extends StatelessWidget {
     try {
       await FirebaseAuthOAuth()
           .openSignInFlow("apple.com", ["email"], {"locale": "en"});
-    } on PlatformException {
-      debugPrint("error logging in");
+    } on PlatformException catch (error) {
+      /**
+       * The plugin has the following error codes:
+       * 1. FirebaseAuthError: FirebaseAuth related error
+       * 2. PlatformError: An platform related error
+       * 3. PluginError: An error from this plugin
+       */
+      debugPrint("${error.code}: ${error.message}");
     }
   }
 
