@@ -7,7 +7,7 @@
 
 import FirebaseAuth
 
-extension SwiftFirebaseAppleAuthPlugin {
+extension FirebaseAuthOAuthViewController {
 	func oAuthSignIn(arguments: [String: String]) {
 		guard let providerId = arguments["provider"] else {
 			finalizeResult(

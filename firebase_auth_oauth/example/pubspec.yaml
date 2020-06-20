@@ -22,5 +22,9 @@ dev_dependencies:
   firebase_auth_oauth:
     path: ../
 
+dependency_overrides:
+  firebase_auth_oauth_platform_interface:
+    path: ../../firebase_auth_oauth_platform_interface
+
 flutter:
   uses-material-design: true

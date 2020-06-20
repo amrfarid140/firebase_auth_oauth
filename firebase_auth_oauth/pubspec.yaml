@@ -23,9 +23,9 @@ flutter:
   plugin:
     platforms:
       android:
-        package: me.amryousef.apple.auth.firebase_apple_auth
-        pluginClass: FirebaseAppleAuthPlugin
+        package: me.amryousef.apple.auth.firebase_auth_oauth
+        pluginClass: FirebaseAuthOAuthPlugin
       ios:
-        pluginClass: FirebaseAppleAuthPlugin
+        pluginClass: FirebaseAuthOAuthPlugin
       web:
         default_package: firebase_apple_auth_web

@@ -10,7 +10,7 @@ import CryptoKit
 import FirebaseAuth
 
 
-extension SwiftFirebaseAppleAuthPlugin: ASAuthorizationControllerDelegate {
+extension FirebaseAuthOAuthViewController: ASAuthorizationControllerDelegate {
 	
 	@available(iOS 13, *)
 	func signInWithApple(arguments: [String: String]) {

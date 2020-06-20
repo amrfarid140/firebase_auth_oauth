@@ -2,15 +2,15 @@ import Flutter
 import UIKit
 import FirebaseAuth
 
-public class SwiftFirebaseAppleAuthPlugin: UIViewController, FlutterPlugin {
+public class FirebaseAuthOAuthViewController: UIViewController, FlutterPlugin {
 	
 	internal var currentNonce: String?
 	private var result: FlutterResult?
 	var arguments: [String: String]?
 	
 	public static func register(with registrar: FlutterPluginRegistrar) {
-		let channel = FlutterMethodChannel(name: "me.amryousef.apple.auth/firebase_apple_auth", binaryMessenger: registrar.messenger())
-		let instance = SwiftFirebaseAppleAuthPlugin()
+		let channel = FlutterMethodChannel(name: "me.amryousef.apple.auth/firebase_auth_oauth", binaryMessenger: registrar.messenger())
+		let instance = FirebaseAuthOAuthViewController()
 		registrar.addMethodCallDelegate(instance, channel: channel)
 	}
 	
