@@ -1,3 +1,8 @@
+## 0.1.0+8
+
+* Updated firebase_auth to Version ^0.16.1
+* Updated firebase_core to Version ^0.4.5
+
 ## 0.1.0+7
 
 * Updated firebase_auth to Version ^0.16.0

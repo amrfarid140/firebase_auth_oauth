@@ -6,3 +6,5 @@
 
 build/
 *.iml
+.flutter-plugins
+
