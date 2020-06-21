@@ -31,7 +31,7 @@ extension FirebaseAuthOAuthViewController: ASAuthorizationControllerDelegate {
 					request.requestedScopes = jsonArray.map({
 						(scope) -> ASAuthorization.Scope in
 						if(scope == "email") {return .email}
-						else if(scope == "fullName") {return .fullName}
+						else if(scope == "fullName" || scope == "name") {return .fullName}
 						else {fatalError("Unsupported scope " + scope)}
 					})
 				} else {
