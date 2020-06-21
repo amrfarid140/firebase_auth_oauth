@@ -38,7 +38,7 @@ Also Checkout [the example Widget](https://github.com/amrfarid140/firebase_auth_
 
 | Name        | Supported           |
 | ------------- |:-------------:|
-| Apple      | ✅ (only iOS 13) |
+| Apple      | ✅ (Android, Web & iOS 13) |
 | Twitter      | ✅      |
 | Github | ✅      |
 | Microsoft | ✅      |
