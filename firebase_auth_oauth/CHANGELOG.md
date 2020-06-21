@@ -1,3 +1,7 @@
+## 0.1.1+1
+
+* Fixed type in README
+
 ## 0.1.1
 
 * Improved error handling across iOS and Android

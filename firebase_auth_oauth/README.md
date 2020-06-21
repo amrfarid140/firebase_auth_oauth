@@ -50,7 +50,7 @@ to Sign in by Apple on iOS 13 where it uses the native `AuthenticationService`.
 
 # Error Handling
 
-Below are the error codes you might receive when authentication using this plugin 
+Below are the error codes you might receive when using this plugin 
 
 | Code        | Meaning           |
 | ------------- |:-------------:|
