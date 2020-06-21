@@ -8,10 +8,10 @@ import 'package:flutter/services.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  Future<void> performSignIn() async {
+  Future<void> performLogin(String provider, List<String> scopes,
+      Map<String, String> parameters) async {
     try {
-      await FirebaseAuthOAuth()
-          .openSignInFlow("apple.com", ["email"], {"locale": "en"});
+      await FirebaseAuthOAuth().openSignInFlow(provider, scopes, parameters);
     } on PlatformException catch (error) {
       /**
        * The plugin has the following error codes:
@@ -27,36 +27,53 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Column(
-          children: <Widget>[
-            Center(
-              child: Text('Running example'),
-            ),
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: StreamBuilder(
-                  initialData: null,
-                  stream: FirebaseAuth.instance.onAuthStateChanged,
-                  builder: (BuildContext context,
-                      AsyncSnapshot<FirebaseUser> snapshot) {
-                    return RaisedButton(
-                      onPressed: () async {
-                        if (snapshot.data != null) {
+          appBar: AppBar(
+            title: const Text('Plugin example app'),
+          ),
+          body: StreamBuilder(
+              initialData: null,
+              stream: FirebaseAuth.instance.onAuthStateChanged,
+              builder:
+                  (BuildContext context, AsyncSnapshot<FirebaseUser> snapshot) {
+                return Column(
+                  children: [
+                    Center(
+                      child: Text(
+                          snapshot.data == null ? "Logged out" : "Logged In"),
+                    ),
+                    if (snapshot.data == null) ...[
+                      RaisedButton(
+                        onPressed: () async {
+                          await performLogin(
+                              "apple.com", ["email"], {"locale": "en"});
+                        },
+                        child: Text("Sign in By Apple"),
+                      ),
+                      RaisedButton(
+                        onPressed: () async {
+                          await performLogin(
+                              "twitter.com", ["email"], {"lang": "en"});
+                        },
+                        child: Text("Sign in By Twitter"),
+                      ),
+                      RaisedButton(
+                        onPressed: () async {
+                          await performLogin(
+                              "github.com", ["user:email"], {"lang": "en"});
+                        },
+                        child: Text("Sign in By Github"),
+                      )
+                    ],
+                    if (snapshot.data != null)
+                      RaisedButton(
+                        onPressed: () async {
                           await FirebaseAuth.instance.signOut();
-                        } else {
-                          await performSignIn();
-                        }
-                      },
-                      child: Text(snapshot.data != null ? "Logout" : "Login"),
-                    );
-                  }),
-            )
-          ],
-        ),
-      ),
+                        },
+                        child: Text("Logout"),
+                      )
+                  ],
+                );
+              })),
     );
   }
 }
