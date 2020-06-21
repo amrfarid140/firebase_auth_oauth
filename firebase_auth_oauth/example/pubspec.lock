@@ -72,11 +72,11 @@ packages:
     source: path
     version: "0.1.1"
   firebase_auth_oauth_platform_interface:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
-      path: "../../firebase_auth_oauth_platform_interface"
-      relative: true
-    source: path
+      name: firebase_auth_oauth_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.1.0+6"
   firebase_auth_oauth_web:
     dependency: transitive
