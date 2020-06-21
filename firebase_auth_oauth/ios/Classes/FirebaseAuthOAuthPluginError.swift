@@ -26,9 +26,9 @@ extension FirebaseAuthOAuthPluginError {
 	func flutterError() -> FlutterError {
 		switch self {
 		case .FirebaseAuthError(let error):
-			return FlutterError(code: code, message: error.localizedDescription, details: error)
+			return FlutterError(code: code, message: error.localizedDescription, details: nil)
 		case .PlatformError(let error):
-			return FlutterError(code: code, message: error.localizedDescription, details: error)
+			return FlutterError(code: code, message: error.localizedDescription, details: nil)
 		case .PluginError(let error):
 			return FlutterError(code: code, message: error, details: nil)
 		}
