@@ -9,14 +9,6 @@ import FirebaseAuth
 
 extension FirebaseAuthOAuthViewController {
 	func oAuthSignIn(arguments: [String: String]) {
-		guard let providerId = arguments["provider"] else {
-			finalizeResult(
-				FirebaseAuthOAuthPluginError
-					.PluginError(error: "Provider argument cannot be null")
-			)
-			return
-		}
-		let provider = OAuthProvider(providerID: providerId)
 		guard let scopesString = arguments["scopes"] else {
 			finalizeResult(
 				FirebaseAuthOAuthPluginError
@@ -40,18 +32,18 @@ extension FirebaseAuthOAuthViewController {
 			)
 			return
 		}
-		provider.scopes = jsonArray
+		authProvider?.scopes = jsonArray
 		
 		let parametersString = arguments["parameters"]
 		
 		if let data = parametersString?.data(using: .utf8) {
 			if let jsonObject = try? JSONSerialization.jsonObject(with: data, options : .allowFragments) as? Dictionary<String, String>
 			{
-				provider.customParameters = jsonObject
+				authProvider?.customParameters = jsonObject
 			}
 		}
 		
-		provider.getCredentialWith(nil) { credential, error in
+		authProvider?.getCredentialWith(nil) { credential, error in
 			if let firebaseError = error {
 				self.finalizeResult(
 					FirebaseAuthOAuthPluginError

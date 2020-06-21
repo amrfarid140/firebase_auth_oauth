@@ -6,6 +6,7 @@ public class FirebaseAuthOAuthViewController: UIViewController, FlutterPlugin {
 	
 	internal var currentNonce: String?
 	private var result: FlutterResult?
+	private(set) public var authProvider: OAuthProvider?
 	var arguments: [String: String]?
 	
 	public static func register(with registrar: FlutterPluginRegistrar) {
@@ -17,14 +18,21 @@ public class FirebaseAuthOAuthViewController: UIViewController, FlutterPlugin {
 	public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
 		self.result = result
 		if let arguments = call.arguments as? [String:String] {
-			let provider = arguments["provider"]
-			if provider == "apple.com" {
+			guard let providerId = arguments["provider"] else {
+				finalizeResult(
+					FirebaseAuthOAuthPluginError
+						.PluginError(error: "Provider argument cannot be null")
+				)
+				return
+			}
+			if providerId == "apple.com" {
 				if #available(iOS 13.0, *) {
 					signInWithApple(arguments: arguments)
 				} else {
 					finalizeResult(FirebaseAuthOAuthPluginError.PluginError(error: "Sign in by Apple is not supported for this iOS version"))
 				}
 			} else {
+				authProvider = OAuthProvider(providerID: providerId)
 				oAuthSignIn(arguments: arguments)
 			}
 		} else {
@@ -50,5 +58,6 @@ public class FirebaseAuthOAuthViewController: UIViewController, FlutterPlugin {
 		}
 		
 		self.result = nil
+		self.authProvider = nil
 	}
 }
