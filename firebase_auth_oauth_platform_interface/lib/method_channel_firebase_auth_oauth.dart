@@ -5,7 +5,7 @@ class MethodChannelFirebaseAuthOAuth extends FirebaseAuthOAuth {
   final FirebaseApp _app;
 
   static const MethodChannel _channel =
-      const MethodChannel('me.amryousef.apple.auth/firebase_apple_auth');
+      const MethodChannel('me.amryousef.apple.auth/firebase_auth_oauth');
 
   MethodChannelFirebaseAuthOAuth._({FirebaseApp app})
       : _app = app ?? FirebaseApp.instance,

@@ -15,9 +15,9 @@ OAuth flows are performed by opening pop-up on top of the application to allow t
 dependencies:
   flutter:
     sdk: flutter
-  firebase_auth: ^0.15.3
-  firebase_core: ^0.4.3+1
-  firebase_auth_oauth: ^0.1.0
+  firebase_auth: ^0.16.1
+  firebase_core: ^0.4.5
+  firebase_auth_oauth: ^0.1.1
 ```
 
 - Then in your project just call
@@ -32,5 +32,29 @@ FirebaseUser user = await FirebaseAuthOAuth()
           .openSignInFlow("apple.com", ["email"], {"locale": "en"});
 
 ```
+Also Checkout [the example Widget](https://github.com/amrfarid140/firebase_auth_oauth/blob/main/firebase_auth_oauth/example/lib/main.dart).
 
-Also Checkout [the example Widget](https://github.com/amrfarid140/firebase_auth_oauth/blob/master/firebase_auth_oauth/example/lib/main.dart).
+# Auth Providers Support
+
+| Name        | Supported           |
+| ------------- |:-------------:|
+| Apple      | ✅ (Android, Web & iOS 13) |
+| Twitter      | ✅      |
+| Github | ✅      |
+| Microsoft | ✅      |
+| Yahoo | ✅      |
+| Facebook | 🚫     |
+
+This plugin supports OAuth operations using `OAuthProvider` only with the exception
+to Sign in by Apple on iOS 13 where it uses the native `AuthenticationService`.
+
+# Error Handling
+
+Below are the error codes you might receive when authentication using this plugin 
+
+| Code        | Meaning           |
+| ------------- |:-------------:|
+| FirebaseAuthError      | An error coming from `FirebaseAuth` SDK |
+| PluginError      | An error coming from this plugin. e.g. Invalid arguments or null items      |
+| PlatformError | An error coming from the native platform      |
+

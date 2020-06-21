@@ -1,4 +1,4 @@
-#import "FirebaseAppleAuthPlugin.h"
+#import "FirebaseAuthOAuthPlugin.h"
 #if __has_include(<firebase_auth_oauth/firebase_auth_oauth-Swift.h>)
 #import <firebase_auth_oauth/firebase_auth_oauth-Swift.h>
 #else
@@ -8,8 +8,8 @@
 #import "firebase_auth_oauth-Swift.h"
 #endif
 
-@implementation FirebaseAppleAuthPlugin
+@implementation FirebaseAuthOAuthPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
-  [SwiftFirebaseAppleAuthPlugin registerWithRegistrar:registrar];
+  [FirebaseAuthOAuthViewController registerWithRegistrar:registrar];
 }
 @end

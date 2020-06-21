@@ -1,4 +1,4 @@
-package me.amryousef.apple.auth.firebase_apple_auth
+package me.amryousef.apple.auth.firebase_auth_oauth
 
 import android.app.Activity
 import androidx.annotation.NonNull
@@ -19,12 +19,12 @@ import io.flutter.plugin.common.PluginRegistry.Registrar
 
 /** FirebaseAppleAuthPlugin */
 @Suppress("DEPRECATION")
-class FirebaseAppleAuthPlugin : FlutterPlugin, ActivityAware, MethodCallHandler {
+class FirebaseAuthOAuthPlugin : FlutterPlugin, ActivityAware, MethodCallHandler {
 
     private var activity: Activity? = null
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        val channel = MethodChannel(flutterPluginBinding.flutterEngine.dartExecutor, "me.amryousef.apple.auth/firebase_apple_auth")
+        val channel = MethodChannel(flutterPluginBinding.flutterEngine.dartExecutor, "me.amryousef.apple.auth/firebase_auth_oauth")
         channel.setMethodCallHandler(this)
     }
 
@@ -32,14 +32,26 @@ class FirebaseAppleAuthPlugin : FlutterPlugin, ActivityAware, MethodCallHandler 
         @Suppress("unused")
         @JvmStatic
         fun registerWith(registrar: Registrar) {
-            val channel = MethodChannel(registrar.messenger(), "me.amryousef.apple.auth/firebase_apple_auth")
-            channel.setMethodCallHandler(FirebaseAppleAuthPlugin().apply { activity = registrar.activity() })
+            val channel = MethodChannel(registrar.messenger(), "me.amryousef.apple.auth/firebase_auth_oauth")
+            channel.setMethodCallHandler(FirebaseAuthOAuthPlugin().apply { activity = registrar.activity() })
         }
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-        val providerBuilder = OAuthProvider.newBuilder(call.argument<String>("provider")!!)
+        val providerBuilder = call.argument<String>("provider")?.let { OAuthProvider.newBuilder(it) }
+        if (providerBuilder == null) {
+            FirebaseAuthOAuthPluginError
+                    .PluginError("Provider argument cannot be null")
+                    .toResult(result)
+            return
+        }
         val gson = Gson()
+        if (call.argument<String>("scopes") == null) {
+            FirebaseAuthOAuthPluginError
+                    .PluginError("Scope cannot be null")
+                    .toResult(result)
+            return
+        }
         call.argument<String>("scopes")?.let {
             providerBuilder.setScopes(gson.fromJson(it, object : TypeToken<List<String>>() {}.type))
         }
@@ -56,21 +68,19 @@ class FirebaseAppleAuthPlugin : FlutterPlugin, ActivityAware, MethodCallHandler 
                 FirebaseAuth.getInstance(FirebaseApp.getInstance(appName))
             } ?: FirebaseAuth.getInstance()
             val pending = auth.pendingAuthResult
-            @Suppress("IfThenToElvis")
-            if (pending != null) {
-                pending.addOnSuccessListener {
-                    result.success("")
-                }.addOnFailureListener { error ->
-                    result.error("100", error.localizedMessage, null)
-                }
-            } else {
-                auth.startActivityForSignInWithProvider(it, provider).addOnSuccessListener {
-                    result.success("")
-                }.addOnFailureListener { error ->
-                    result.error("200", error.localizedMessage, null)
-                }
+            pending?.addOnSuccessListener {
+                result.success("")
+            }?.addOnFailureListener { error ->
+                FirebaseAuthOAuthPluginError
+                        .FirebaseAuthError(error)
+                        .toResult(result)
+            } ?: auth.startActivityForSignInWithProvider(it, provider).addOnSuccessListener {
+                result.success("")
+            }.addOnFailureListener { error ->
+                FirebaseAuthOAuthPluginError
+                        .FirebaseAuthError(error)
+                        .toResult(result)
             }
-
         }
     }
 
