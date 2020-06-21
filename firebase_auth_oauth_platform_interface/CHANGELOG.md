@@ -1,3 +1,7 @@
+## [0.1.0+6]
+
+* Internal method channel rename
+
 ## [0.1.0+5]
 
 * Updated firebase_auth to Version ^0.16.1

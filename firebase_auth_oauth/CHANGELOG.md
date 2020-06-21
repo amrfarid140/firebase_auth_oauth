@@ -1,3 +1,8 @@
+## 0.1.1
+
+* Improved error handling across iOS and Android
+* Consistent error behaviour across platforms
+
 ## 0.1.0+8
 
 * Updated firebase_auth to Version ^0.16.1
