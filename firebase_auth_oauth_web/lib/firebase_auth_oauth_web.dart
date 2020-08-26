@@ -15,18 +15,20 @@ class FirebaseAuthOAuthWeb implements FirebaseAuthOAuth {
   }
 
   FirebaseAuthOAuthWeb._({FirebaseApp app})
-      : _app = app ?? FirebaseApp.instance;
+      : _app = app ?? Firebase.app();
 
   @override
-  Future<FirebaseUser> openSignInFlow(String provider, List<String> scopes,
-      [Map<String, String> customOAuthParameters]) async {
+  Future<User> openSignInFlow(
+    String provider, List<String> scopes,
+    [Map<String, String> customOAuthParameters]
+  ) async {
     final oAuthProvider = web.OAuthProvider(provider);
     scopes.forEach((scope) => oAuthProvider.addScope(scope));
     if (customOAuthParameters != null) {
       oAuthProvider.setCustomParameters(customOAuthParameters);
     }
     await web.app(_app.name).auth().signInWithPopup(oAuthProvider);
-    return FirebaseAuth.fromApp(_app).currentUser();
+    return FirebaseAuth.instanceFor(app: _app).currentUser;
   }
 
   @override

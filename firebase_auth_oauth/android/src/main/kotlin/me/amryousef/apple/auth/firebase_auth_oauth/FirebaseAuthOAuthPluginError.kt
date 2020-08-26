@@ -20,7 +20,7 @@ sealed class FirebaseAuthOAuthPluginError {
 fun FirebaseAuthOAuthPluginError.toResult(result: Result) {
     when (this) {
         is FirebaseAuthOAuthPluginError.FirebaseAuthError ->
-            result.error(code, exception.localizedMessage, exception)
+            result.error(code, exception.localizedMessage, null)
         is FirebaseAuthOAuthPluginError.PlatformError ->
             result.error(code, exception.localizedMessage, exception)
         is FirebaseAuthOAuthPluginError.PluginError ->

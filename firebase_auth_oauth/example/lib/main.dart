@@ -2,10 +2,16 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth_oauth/firebase_auth_oauth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   Future<void> performLogin(String provider, List<String> scopes,
@@ -32,9 +38,9 @@ class MyApp extends StatelessWidget {
           ),
           body: StreamBuilder(
               initialData: null,
-              stream: FirebaseAuth.instance.onAuthStateChanged,
+              stream: FirebaseAuth.instance.authStateChanges(),
               builder:
-                  (BuildContext context, AsyncSnapshot<FirebaseUser> snapshot) {
+                  (BuildContext context, AsyncSnapshot<User> snapshot) {
                 return Column(
                   children: [
                     Center(
