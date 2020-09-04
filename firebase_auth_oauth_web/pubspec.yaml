@@ -13,7 +13,9 @@ dependencies:
   flutter_web_plugins:
     sdk: flutter
   firebase_auth_oauth_platform_interface: #^0.2.0
-    path: ../firebase_auth_oauth_platform_interface/
+    git:
+      url: git://github.com/animo-wellness/firebase_auth_oauth.git
+      path: firebase_auth_oauth_platform_interface
   firebase: ^7.3.0
   js: ^0.6.2
   firebase_auth: ^0.18.0

@@ -74,10 +74,12 @@ packages:
   firebase_auth_oauth_platform_interface:
     dependency: "direct main"
     description:
-      path: "../firebase_auth_oauth_platform_interface"
-      relative: true
-    source: path
-    version: "0.1.0+6"
+      path: firebase_auth_oauth_platform_interface
+      ref: HEAD
+      resolved-ref: "3016bb439e57e5bbf6ca5d78da00a3b15f7e70b0"
+      url: "git://github.com/animo-wellness/firebase_auth_oauth.git"
+    source: git
+    version: "0.2.0"
   firebase_auth_platform_interface:
     dependency: transitive
     description:
