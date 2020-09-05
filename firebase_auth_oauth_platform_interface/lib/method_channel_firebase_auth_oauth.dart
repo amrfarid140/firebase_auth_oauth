@@ -25,6 +25,18 @@ class MethodChannelFirebaseAuthOAuth extends FirebaseAuthOAuth {
   }
 
   @override
+  Future<User> linkExistingUserWithCredentials(String provider, List<String> scopes, [Map<String, String> customOAuthParameters]) async {
+    await _channel.invokeMethod("linkExistingUserWithCredentials", {
+      'provider': provider,
+      'app': _app.name,
+      'scopes': json.encode(scopes),
+      if (customOAuthParameters != null)
+        'parameters': json.encode(customOAuthParameters)
+    });
+    return FirebaseAuth.instanceFor(app: _app).currentUser;
+  }
+
+  @override
   FirebaseAuthOAuth withApp(FirebaseApp app) =>
       MethodChannelFirebaseAuthOAuth._(app: app);
 }

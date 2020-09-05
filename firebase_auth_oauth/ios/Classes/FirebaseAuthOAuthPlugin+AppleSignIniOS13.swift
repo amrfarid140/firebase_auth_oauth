@@ -124,16 +124,7 @@ extension FirebaseAuthOAuthViewController: ASAuthorizationControllerDelegate {
 			let credential = OAuthProvider.credential(withProviderID: "apple.com",
 													  idToken: idTokenString,
 													  rawNonce: nonce)
-			Auth.auth().signIn(with: credential) { (authResult, error) in
-				if (error != nil) {
-					self.finalizeResult(
-						FirebaseAuthOAuthPluginError.FirebaseAuthError(error: error!)
-					)
-					return
-				}
-				// User is signed in.
-				self.finalizeResult(Auth.auth().currentUser!)
-			}
+			self.consumeCredentials(credential)
 		}
 	}
 	

@@ -53,16 +53,7 @@ extension FirebaseAuthOAuthViewController {
 			}
 			
 			if credential != nil {
-				Auth.auth().signIn(with: credential!) { authResult, error in
-					if let firebaseError = error {
-						self.finalizeResult(
-							FirebaseAuthOAuthPluginError
-								.FirebaseAuthError(error: firebaseError)
-						)
-						return
-					}
-					self.finalizeResult(Auth.auth().currentUser!)
-				}
+				self.consumeCredentials(credential!)
 			}
 		}
 	}

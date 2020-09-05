@@ -9,7 +9,6 @@ import 'package:flutter/services.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
   runApp(MyApp());
 }
 
@@ -38,7 +37,7 @@ class MyApp extends StatelessWidget {
           ),
           body: StreamBuilder(
               initialData: null,
-              stream: FirebaseAuth.instance.authStateChanges(),
+              stream: FirebaseAuth.instance.userChanges(),
               builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
                 return Column(
                   children: [
@@ -46,7 +45,7 @@ class MyApp extends StatelessWidget {
                       child: Text(
                           snapshot.data == null ? "Logged out" : "Logged In"),
                     ),
-                    if (snapshot.data == null) ...[
+                    if (snapshot.data == null || snapshot.data.isAnonymous) ...[
                       RaisedButton(
                         onPressed: () async {
                           await performLogin(
