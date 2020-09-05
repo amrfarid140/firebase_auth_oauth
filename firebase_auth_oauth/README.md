@@ -7,7 +7,7 @@ OAuth flows are performed by opening pop-up on top of the application to allow t
 
 # Usage
 
-**You need to setup Firebase for your project first before using this plugin.**
+**You need to set up Firebase for your project first before using this plugin. Instructions can be found [here](https://firebase.flutter.dev/docs/overview).**
 
 - In your `pubspec.yaml` add
 
@@ -15,9 +15,9 @@ OAuth flows are performed by opening pop-up on top of the application to allow t
 dependencies:
   flutter:
     sdk: flutter
-  firebase_auth: ^0.16.1
-  firebase_core: ^0.4.5
-  firebase_auth_oauth: ^0.1.1
+  firebase_auth: ^0.18.0+1
+  firebase_core: ^0.5.0
+  firebase_auth_oauth: ^0.2.0
 ```
 
 - Then in your project just call
@@ -28,11 +28,14 @@ FirebaseUser user = await FirebaseAuthOAuth().openSignInFlow("A provider ID", [l
 
 // Sign-in by Apple example
 
-FirebaseUser user = await FirebaseAuthOAuth()
+User user = await FirebaseAuthOAuth()
           .openSignInFlow("apple.com", ["email"], {"locale": "en"});
 
+// Or you can link an existing logged-in user
+User user = await FirebaseAuthOAuth()
+          .linkExistingUserWithCredentials("apple.com", ["email"], {"locale": "en"});
 ```
-Also Checkout [the example Widget](https://github.com/amrfarid140/firebase_auth_oauth/blob/main/firebase_auth_oauth/example/lib/main.dart).
+Checkout [the example Widget](https://github.com/amrfarid140/firebase_auth_oauth/blob/main/firebase_auth_oauth/example/lib/main.dart).
 
 # Auth Providers Support
 

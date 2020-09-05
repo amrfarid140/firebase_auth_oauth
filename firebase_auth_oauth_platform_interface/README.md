@@ -1,6 +1,6 @@
 # firebase_auth_oauth_platform_interface
 
-API definition for `firebase_auth_oauth` to guide the implementation across all supported platforms.
+API's definition for `firebase_auth_oauth` to guide the implementation across all supported platforms.
 
 ## Usage
 
