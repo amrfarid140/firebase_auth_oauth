@@ -1,6 +1,6 @@
 import 'package:firebase/firebase.dart' as web;
-import 'package:firebase_auth_oauth_platform_interface/firebase_auth_oauth_platform_interface.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth_oauth_platform_interface/firebase_auth_oauth_platform_interface.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
@@ -14,11 +14,10 @@ class FirebaseAuthOAuthWeb implements FirebaseAuthOAuth {
     FirebaseAuthOAuth.instance = FirebaseAuthOAuthWeb._();
   }
 
-  FirebaseAuthOAuthWeb._({FirebaseApp app})
-      : _app = app ?? FirebaseApp.instance;
+  FirebaseAuthOAuthWeb._({FirebaseApp app}) : _app = app ?? Firebase.app();
 
   @override
-  Future<FirebaseUser> openSignInFlow(String provider, List<String> scopes,
+  Future<User> openSignInFlow(String provider, List<String> scopes,
       [Map<String, String> customOAuthParameters]) async {
     final oAuthProvider = web.OAuthProvider(provider);
     scopes.forEach((scope) => oAuthProvider.addScope(scope));
@@ -26,7 +25,7 @@ class FirebaseAuthOAuthWeb implements FirebaseAuthOAuth {
       oAuthProvider.setCustomParameters(customOAuthParameters);
     }
     await web.app(_app.name).auth().signInWithPopup(oAuthProvider);
-    return FirebaseAuth.fromApp(_app).currentUser();
+    return FirebaseAuth.instanceFor(app: _app).currentUser;
   }
 
   @override
