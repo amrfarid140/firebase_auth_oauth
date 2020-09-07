@@ -29,6 +29,9 @@ class FirebaseAuthOAuthPlugin : FlutterPlugin, ActivityAware, MethodCallHandler 
     }
 
     companion object {
+        private const val CREATE_USER_METHOD = "openSignInFlow"
+        private const val LINK_USER_METHOD = "linkExistingUserWithCredentials"
+
         @Suppress("unused")
         @JvmStatic
         fun registerWith(registrar: Registrar) {
@@ -41,15 +44,15 @@ class FirebaseAuthOAuthPlugin : FlutterPlugin, ActivityAware, MethodCallHandler 
         val providerBuilder = call.argument<String>("provider")?.let { OAuthProvider.newBuilder(it) }
         if (providerBuilder == null) {
             FirebaseAuthOAuthPluginError
-                    .PluginError("Provider argument cannot be null")
-                    .toResult(result)
+                .PluginError("Provider argument cannot be null")
+                .toResult(result)
             return
         }
         val gson = Gson()
         if (call.argument<String>("scopes") == null) {
             FirebaseAuthOAuthPluginError
-                    .PluginError("Scope cannot be null")
-                    .toResult(result)
+                .PluginError("Scope cannot be null")
+                .toResult(result)
             return
         }
         call.argument<String>("scopes")?.let {
@@ -57,9 +60,9 @@ class FirebaseAuthOAuthPlugin : FlutterPlugin, ActivityAware, MethodCallHandler 
         }
         call.argument<String>("parameters")?.let {
             providerBuilder.addCustomParameters(
-                    gson.fromJson<Map<String, String>>(
-                            it,
-                            object : TypeToken<Map<String, String>>() {}.type)
+                gson.fromJson<Map<String, String>>(
+                    it,
+                    object : TypeToken<Map<String, String>>() {}.type)
             )
         }
         val provider = providerBuilder.build()
@@ -72,15 +75,26 @@ class FirebaseAuthOAuthPlugin : FlutterPlugin, ActivityAware, MethodCallHandler 
                 result.success("")
             }?.addOnFailureListener { error ->
                 FirebaseAuthOAuthPluginError
+                    .FirebaseAuthError(error)
+                    .toResult(result)
+            } ?: auth.startActivityForSignInWithProvider(it, provider).addOnSuccessListener { authResult ->
+                    if (call.method == CREATE_USER_METHOD) {
+                        result.success("")
+                        return@addOnSuccessListener
+                    } else if (call.method == LINK_USER_METHOD) {
+                        val user = auth.currentUser
+                        if (user == null) {
+                            FirebaseAuthOAuthPluginError.PluginError(
+                                ""
+                            ).toResult(result)
+                        }
+                        user?.linkWithCredential(authResult.credential!!)
+                    }
+                }.addOnFailureListener { error ->
+                    FirebaseAuthOAuthPluginError
                         .FirebaseAuthError(error)
                         .toResult(result)
-            } ?: auth.startActivityForSignInWithProvider(it, provider).addOnSuccessListener {
-                result.success("")
-            }.addOnFailureListener { error ->
-                FirebaseAuthOAuthPluginError
-                        .FirebaseAuthError(error)
-                        .toResult(result)
-            }
+                }
         }
     }
 

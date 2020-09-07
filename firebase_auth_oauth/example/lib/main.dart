@@ -2,10 +2,15 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth_oauth/firebase_auth_oauth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   Future<void> performLogin(String provider, List<String> scopes,
@@ -32,16 +37,15 @@ class MyApp extends StatelessWidget {
           ),
           body: StreamBuilder(
               initialData: null,
-              stream: FirebaseAuth.instance.onAuthStateChanged,
-              builder:
-                  (BuildContext context, AsyncSnapshot<FirebaseUser> snapshot) {
+              stream: FirebaseAuth.instance.userChanges(),
+              builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
                 return Column(
                   children: [
                     Center(
                       child: Text(
                           snapshot.data == null ? "Logged out" : "Logged In"),
                     ),
-                    if (snapshot.data == null) ...[
+                    if (snapshot.data == null || snapshot.data.isAnonymous) ...[
                       RaisedButton(
                         onPressed: () async {
                           await performLogin(
