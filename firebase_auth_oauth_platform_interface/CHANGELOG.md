@@ -1,3 +1,6 @@
+## 0.2.1
+* Fixed Firebase not initialised issue when using this plugin
+ 
 ## 0.2.0
 * Migrated to `firebase_auth` ^0.18.0+1
 * Migrated to `firebase_auth` ^0.5.0
