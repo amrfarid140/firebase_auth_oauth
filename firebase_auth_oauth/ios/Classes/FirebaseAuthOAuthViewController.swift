@@ -75,13 +75,7 @@ public class FirebaseAuthOAuthViewController: UIViewController, FlutterPlugin {
                             .FirebaseAuthError(error: firebaseError)
                     )
                 }
-                guard let currentUser = Auth.auth().currentUser else {
-                    self.finalizeResult(
-                        FirebaseAuthOAuthPluginError
-                            .PluginError(error: "User null")
-                    )
-                }
-                self.finalizeResult(Auth.auth().currentUser)
+                self.finalizeResult(currentUser)
 			}
 		}
 	}
