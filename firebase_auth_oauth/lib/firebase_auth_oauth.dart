@@ -15,13 +15,13 @@ class FirebaseAuthOAuth implements platform.FirebaseAuthOAuth {
 
   @override
   Future<User> openSignInFlow(String provider, List<String> scopes,
-      [Map<String, String> customOAuthParameters]) =>
+          [Map<String, String> customOAuthParameters]) =>
       _delegate.openSignInFlow(provider, scopes, customOAuthParameters);
 
   @override
-  Future<User> linkExistingUserWithCredentials(String provider,
-      List<String> scopes,
-      [Map<String, String> customOAuthParameters]) =>
+  Future<User> linkExistingUserWithCredentials(
+          String provider, List<String> scopes,
+          [Map<String, String> customOAuthParameters]) =>
       _delegate.linkExistingUserWithCredentials(
           provider, scopes, customOAuthParameters);
 
