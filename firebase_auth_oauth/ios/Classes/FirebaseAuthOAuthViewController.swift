@@ -48,13 +48,17 @@ public class FirebaseAuthOAuthViewController: UIViewController, FlutterPlugin {
 	func consumeCredentials(_ credential: AuthCredential) {
 		if call?.method == FirebaseAuthOAuthViewController.CREATE_USER_METHOD {
 			Auth.auth().signIn(with: credential) { authResult, error in
+                guard let currentUser = Auth.auth().currentUser else {
+                    self.finalizeResult(.PluginError(error: "currentUser is nil. Make sure a user exists when \(FirebaseAuthOAuthViewController.CREATE_USER_METHOD) is used."))
+                    return
+                }
 				if let firebaseError = error {
 					self.finalizeResult(
 						FirebaseAuthOAuthPluginError
 							.FirebaseAuthError(error: firebaseError)
 					)
 				}
-				self.finalizeResult(Auth.auth().currentUser!)
+				self.finalizeResult(currentUser)
 			}
 		}
 		if call?.method == FirebaseAuthOAuthViewController.LINK_USER_METHOD {
@@ -63,12 +67,15 @@ public class FirebaseAuthOAuthViewController: UIViewController, FlutterPlugin {
 				return
 			}
 			currentUser.link(with: credential) { (result, error) in
-				if error != nil {
-					self.finalizeResult(.FirebaseAuthError(error: error!))
-				}
-				if result != nil {
-					self.finalizeResult(currentUser)
-				}
+                if let firebaseError = error {
+                    self.finalizeResult(
+                        FirebaseAuthOAuthPluginError
+                            .FirebaseAuthError(error: firebaseError)
+                    )
+                }
+                if result != nil {
+                    self.finalizeResult(currentUser)
+                }
 			}
 		}
 	}
