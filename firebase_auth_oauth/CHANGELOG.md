@@ -1,10 +1,18 @@
+## 0.2.3
+
+* Replace CryptoKit pod with Apple's CryptoKit framework
+
 ## 0.2.2
-* Fixed crash on iOS when using Microsoft sign in. Thanks to [@camillobucciarelli](https://github.com/camillobucciarelli).
+
+* Fixed crash on iOS when using Microsoft sign in. Thanks
+  to [@camillobucciarelli](https://github.com/camillobucciarelli).
 
 ## 0.2.1
+
 * Fixed Firebase not initialised issue when using this plugin
 
 ## 0.2.0
+
 * Migrated to `firebase_auth` ^0.18.0+1
 * Migrated to `firebase_auth` ^0.5.0
 * Added `linkExistingUserWithCredentials` to link existing user with OAuth credentials
