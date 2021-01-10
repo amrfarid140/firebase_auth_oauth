@@ -6,7 +6,7 @@
 //
 
 import AuthenticationServices
-import CryptoSwift
+import CryptoKit
 import FirebaseAuth
 
 
@@ -55,11 +55,9 @@ extension FirebaseAuthOAuthViewController: ASAuthorizationControllerDelegate {
 	
 	@available(iOS 13, *)
 	private func sha256(_ input: String) -> String {
-		let inputData = Data(input.utf8)
-		return inputData.sha256().compactMap {
+		return SHA256.hash(data: Data(input.utf8)).compactMap {
 			return String(format: "%02x", $0)
 		}.joined()
-		
 	}
 	
 	// Adapted from https://auth0.com/docs/api-auth/tutorials/nonce#generate-a-cryptographically-random-nonce
