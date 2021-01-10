@@ -16,7 +16,7 @@ A new flutter plugin project.
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
   s.dependency 'firebase_auth'
-  s.dependency 'CryptoKit', '~> 0.4'
+  s.dependency 'CryptoSwift', '~> 1.2.0'
   s.framework = 'AuthenticationServices'
   s.static_framework = true
   s.platform = :ios, '9.0'

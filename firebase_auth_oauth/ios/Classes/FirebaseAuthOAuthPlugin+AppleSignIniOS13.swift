@@ -6,7 +6,7 @@
 //
 
 import AuthenticationServices
-import CryptoKit
+import CryptoSwift
 import FirebaseAuth
 
 
@@ -56,7 +56,7 @@ extension FirebaseAuthOAuthViewController: ASAuthorizationControllerDelegate {
 	@available(iOS 13, *)
 	private func sha256(_ input: String) -> String {
 		let inputData = Data(input.utf8)
-		return inputData.digest(using: .sha256).compactMap {
+		return inputData.sha256().compactMap {
 			return String(format: "%02x", $0)
 		}.joined()
 		
