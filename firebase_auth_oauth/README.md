@@ -15,9 +15,9 @@ OAuth flows are performed by opening pop-up on top of the application to allow t
 dependencies:
   flutter:
     sdk: flutter
-  firebase_auth: ^0.18.0+1
-  firebase_core: ^0.5.0
-  firebase_auth_oauth: ^0.2.0
+  firebase_auth: ^0.20.0+1
+  firebase_core: ^0.7.0
+  firebase_auth_oauth: ^0.2.4
 ```
 
 - Then in your project just call
