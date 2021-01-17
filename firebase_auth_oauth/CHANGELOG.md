@@ -1,3 +1,7 @@
+## 0.2.4
+* Updated `firebase_auth` to Version ^0.20.0+1
+* Updated `firebase_core` to Version ^0.7.0
+
 ## 0.2.3
 
 * Replace CryptoKit pod with Apple's CryptoKit framework
