@@ -81,17 +81,17 @@ packages:
   firebase_auth_oauth_platform_interface:
     dependency: transitive
     description:
-      path: "../../firebase_auth_oauth_platform_interface"
-      relative: true
+      name: firebase_auth_oauth_platform_interface
+      url: "https://pub.dartlang.org"
     source: path
-    version: "0.2.1"
+    version: "0.2.2"
   firebase_auth_oauth_web:
     dependency: transitive
     description:
-      path: "../../firebase_auth_oauth_web"
-      relative: true
+      name: firebase_auth_oauth_web
+      url: "https://pub.dartlang.org"
     source: path
-    version: "0.2.1"
+    version: "0.2.2"
   firebase_auth_platform_interface:
     dependency: transitive
     description:
