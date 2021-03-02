@@ -1,8 +1,7 @@
 name: firebase_auth_oauth
 description: A Flutter plugin that makes it easy to perform OAuth sign in flows using FirebaseAuth. It also includes support for Sign in by Apple for Firebase.
-version: 0.2.4
+version: 1.0.0
 homepage: https://github.com/amrfarid140/firebase_auth_oauth/tree/master/firebase_auth_oauth
-publish_to: none
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
