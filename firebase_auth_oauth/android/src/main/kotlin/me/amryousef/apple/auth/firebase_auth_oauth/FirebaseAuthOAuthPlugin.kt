@@ -18,13 +18,15 @@ import io.flutter.plugin.common.PluginRegistry.Registrar
 
 
 /** FirebaseAppleAuthPlugin */
-@Suppress("DEPRECATION")
 class FirebaseAuthOAuthPlugin : FlutterPlugin, ActivityAware, MethodCallHandler {
 
     private var activity: Activity? = null
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        val channel = MethodChannel(flutterPluginBinding.flutterEngine.dartExecutor, "me.amryousef.apple.auth/firebase_auth_oauth")
+        val channel = MethodChannel(
+            flutterPluginBinding.binaryMessenger,
+            "me.amryousef.apple.auth/firebase_auth_oauth"
+        )
         channel.setMethodCallHandler(this)
     }
 
@@ -32,16 +34,20 @@ class FirebaseAuthOAuthPlugin : FlutterPlugin, ActivityAware, MethodCallHandler 
         private const val CREATE_USER_METHOD = "openSignInFlow"
         private const val LINK_USER_METHOD = "linkExistingUserWithCredentials"
 
-        @Suppress("unused")
+        @Suppress("unused", "deprecation")
         @JvmStatic
         fun registerWith(registrar: Registrar) {
-            val channel = MethodChannel(registrar.messenger(), "me.amryousef.apple.auth/firebase_auth_oauth")
-            channel.setMethodCallHandler(FirebaseAuthOAuthPlugin().apply { activity = registrar.activity() })
+            val channel =
+                MethodChannel(registrar.messenger(), "me.amryousef.apple.auth/firebase_auth_oauth")
+            channel.setMethodCallHandler(FirebaseAuthOAuthPlugin().apply {
+                activity = registrar.activity()
+            })
         }
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-        val providerBuilder = call.argument<String>("provider")?.let { OAuthProvider.newBuilder(it) }
+        val providerBuilder =
+            call.argument<String>("provider")?.let { OAuthProvider.newBuilder(it) }
         if (providerBuilder == null) {
             FirebaseAuthOAuthPluginError
                 .PluginError("Provider argument cannot be null")
@@ -62,7 +68,8 @@ class FirebaseAuthOAuthPlugin : FlutterPlugin, ActivityAware, MethodCallHandler 
             providerBuilder.addCustomParameters(
                 gson.fromJson<Map<String, String>>(
                     it,
-                    object : TypeToken<Map<String, String>>() {}.type)
+                    object : TypeToken<Map<String, String>>() {}.type
+                )
             )
         }
         val provider = providerBuilder.build()
@@ -77,7 +84,8 @@ class FirebaseAuthOAuthPlugin : FlutterPlugin, ActivityAware, MethodCallHandler 
                 FirebaseAuthOAuthPluginError
                     .FirebaseAuthError(error)
                     .toResult(result)
-            } ?: auth.startActivityForSignInWithProvider(it, provider).addOnSuccessListener { authResult ->
+            } ?: auth.startActivityForSignInWithProvider(it, provider)
+                .addOnSuccessListener { authResult ->
                     if (call.method == CREATE_USER_METHOD) {
                         result.success("")
                         return@addOnSuccessListener
@@ -91,10 +99,10 @@ class FirebaseAuthOAuthPlugin : FlutterPlugin, ActivityAware, MethodCallHandler 
                         user?.linkWithCredential(authResult.credential!!)
                     }
                 }.addOnFailureListener { error ->
-                    FirebaseAuthOAuthPluginError
-                        .FirebaseAuthError(error)
-                        .toResult(result)
-                }
+                FirebaseAuthOAuthPluginError
+                    .FirebaseAuthError(error)
+                    .toResult(result)
+            }
         }
     }
 
@@ -102,6 +110,7 @@ class FirebaseAuthOAuthPlugin : FlutterPlugin, ActivityAware, MethodCallHandler 
     }
 
     override fun onDetachedFromActivity() {
+        activity = null
     }
 
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
@@ -113,5 +122,6 @@ class FirebaseAuthOAuthPlugin : FlutterPlugin, ActivityAware, MethodCallHandler 
     }
 
     override fun onDetachedFromActivityForConfigChanges() {
+        activity = null
     }
 }
