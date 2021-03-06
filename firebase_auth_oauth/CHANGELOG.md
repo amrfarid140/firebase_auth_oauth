@@ -18,7 +18,6 @@
 * Fixed crash on iOS when using Microsoft sign in. Thanks to [@camillobucciarelli](https://github.com/camillobucciarelli).
 
 ## 0.2.1
-
 * Fixed Firebase not initialised issue when using this plugin
 
 ## 0.2.0
