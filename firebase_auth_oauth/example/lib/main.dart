@@ -28,6 +28,22 @@ class MyApp extends StatelessWidget {
     }
   }
 
+  Future<void> performLink(String provider, List<String> scopes,
+      Map<String, String> parameters) async {
+    try {
+      await FirebaseAuthOAuth()
+          .linkExistingUserWithCredentials(provider, scopes, parameters);
+    } on PlatformException catch (error) {
+      /**
+       * The plugin has the following error codes:
+       * 1. FirebaseAuthError: FirebaseAuth related error
+       * 2. PlatformError: An platform related error
+       * 3. PluginError: An error from this plugin
+       */
+      debugPrint("${error.code}: ${error.message}");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -69,13 +85,35 @@ class MyApp extends StatelessWidget {
                         child: Text("Sign in By Github"),
                       )
                     ],
-                    if (snapshot.data != null)
+                    if (snapshot.data != null) ...[
+                      ElevatedButton(
+                        onPressed: () async {
+                          await performLink(
+                              "apple.com", ["email"], {"locale": "en"});
+                        },
+                        child: Text("Link Sign in By Apple"),
+                      ),
+                      ElevatedButton(
+                        onPressed: () async {
+                          await performLink(
+                              "twitter.com", ["email"], {"lang": "en"});
+                        },
+                        child: Text("Link Sign in By Twitter"),
+                      ),
+                      ElevatedButton(
+                        onPressed: () async {
+                          await performLink(
+                              "github.com", ["user:email"], {"lang": "en"});
+                        },
+                        child: Text("Link Sign in By Github"),
+                      ),
                       ElevatedButton(
                         onPressed: () async {
                           await FirebaseAuth.instance.signOut();
                         },
                         child: Text("Logout"),
                       )
+                    ]
                   ],
                 );
               })),
