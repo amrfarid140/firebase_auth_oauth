@@ -17,7 +17,7 @@ dependencies:
     sdk: flutter
   firebase_auth: ^1.0.0
   firebase_core: ^1.0.0
-  firebase_auth_oauth: ^1.0.0
+  firebase_auth_oauth: ^1.0.1
 ```
 
 - Then in your project just call

@@ -1,3 +1,8 @@
+# 1.0.1
+
+* Fixed `linkExistingUserWithCredentials` to avoid creating two users on Firebase. Thanks to @tiagocavalli & @mateusfccp
+  .
+
 ## 1.0.0
 
 * Migrated to null safety
