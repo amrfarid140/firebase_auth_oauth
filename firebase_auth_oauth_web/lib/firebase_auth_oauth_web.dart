@@ -14,12 +14,12 @@ class FirebaseAuthOAuthWeb implements FirebaseAuthOAuth {
     FirebaseAuthOAuth.instance = FirebaseAuthOAuthWeb._();
   }
 
-  FirebaseAuthOAuthWeb._({FirebaseApp app}) : _app = app;
+  FirebaseAuthOAuthWeb._({FirebaseApp? app})
+      : _app = app == null ? Firebase.app() : app;
 
   @override
-  Future<User> openSignInFlow(String provider, List<String> scopes,
-      [Map<String, String> customOAuthParameters]) async {
-    _ensureAppInitialised();
+  Future<User?> openSignInFlow(String provider, List<String> scopes,
+      [Map<String, String>? customOAuthParameters]) async {
     final oAuthProvider = web.OAuthProvider(provider);
     scopes.forEach((scope) => oAuthProvider.addScope(scope));
     if (customOAuthParameters != null) {
@@ -30,38 +30,23 @@ class FirebaseAuthOAuthWeb implements FirebaseAuthOAuth {
   }
 
   @override
-  Future<User> linkExistingUserWithCredentials(String provider,
-      List<String> scopes,
-      [Map<String, String> customOAuthParameters]) async {
-    _ensureAppInitialised();
+  Future<User?> linkExistingUserWithCredentials(
+      String provider, List<String> scopes,
+      [Map<String, String>? customOAuthParameters]) async {
     final oAuthProvider = web.OAuthProvider(provider);
     scopes.forEach((scope) => oAuthProvider.addScope(scope));
     if (customOAuthParameters != null) {
       oAuthProvider.setCustomParameters(customOAuthParameters);
     }
-    if (FirebaseAuth
-        .instanceFor(app: _app)
-        .currentUser == null) {
+    if (FirebaseAuth.instanceFor(app: _app).currentUser == null) {
       return Future.error(StateError(
           "currentUser is nil. Make sure a user exists when linkExistingUserWithCredentials is used"));
     }
-    await web
-        .app(_app.name)
-        .auth()
-        .currentUser
-        .linkWithPopup(oAuthProvider);
-    return FirebaseAuth
-        .instanceFor(app: _app)
-        .currentUser;
+    await web.app(_app.name).auth().currentUser?.linkWithPopup(oAuthProvider);
+    return FirebaseAuth.instanceFor(app: _app).currentUser;
   }
 
   @override
   FirebaseAuthOAuth withApp(FirebaseApp app) =>
       FirebaseAuthOAuthWeb._(app: app);
-
-  void _ensureAppInitialised() {
-    if (_app == null) {
-      _app = Firebase.app();
-    }
-  }
 }
