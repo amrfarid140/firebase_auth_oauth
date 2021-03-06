@@ -38,29 +38,30 @@ class MyApp extends StatelessWidget {
           body: StreamBuilder(
               initialData: null,
               stream: FirebaseAuth.instance.userChanges(),
-              builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+              builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
                 return Column(
                   children: [
                     Center(
                       child: Text(
                           snapshot.data == null ? "Logged out" : "Logged In"),
                     ),
-                    if (snapshot.data == null || snapshot.data.isAnonymous) ...[
-                      RaisedButton(
+                    if (snapshot.data == null ||
+                        snapshot.data?.isAnonymous == true) ...[
+                      ElevatedButton(
                         onPressed: () async {
                           await performLogin(
                               "apple.com", ["email"], {"locale": "en"});
                         },
                         child: Text("Sign in By Apple"),
                       ),
-                      RaisedButton(
+                      ElevatedButton(
                         onPressed: () async {
                           await performLogin(
                               "twitter.com", ["email"], {"lang": "en"});
                         },
                         child: Text("Sign in By Twitter"),
                       ),
-                      RaisedButton(
+                      ElevatedButton(
                         onPressed: () async {
                           await performLogin(
                               "github.com", ["user:email"], {"lang": "en"});
@@ -69,7 +70,7 @@ class MyApp extends StatelessWidget {
                       )
                     ],
                     if (snapshot.data != null)
-                      RaisedButton(
+                      ElevatedButton(
                         onPressed: () async {
                           await FirebaseAuth.instance.signOut();
                         },
