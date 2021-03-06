@@ -4,9 +4,11 @@ import 'package:firebase_auth_oauth_platform_interface/firebase_auth_oauth_platf
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
+typedef _AppProvider = FirebaseApp Function();
+
 /// Web implementation for [FirebaseAuthOAuth]
 class FirebaseAuthOAuthWeb implements FirebaseAuthOAuth {
-  FirebaseApp _app;
+  _AppProvider _app = () => Firebase.app();
 
   /// Register this implementation as the default [FirebaseAuthOAuth] instance
   /// Shouldn't be used inside a project. It is automatically invoked by Flutter build system.
@@ -14,8 +16,11 @@ class FirebaseAuthOAuthWeb implements FirebaseAuthOAuth {
     FirebaseAuthOAuth.instance = FirebaseAuthOAuthWeb._();
   }
 
-  FirebaseAuthOAuthWeb._({FirebaseApp? app})
-      : _app = app == null ? Firebase.app() : app;
+  FirebaseAuthOAuthWeb._({FirebaseApp? app}) {
+    if (app != null) {
+      _app = () => app;
+    }
+  }
 
   @override
   Future<User?> openSignInFlow(String provider, List<String> scopes,
@@ -25,8 +30,8 @@ class FirebaseAuthOAuthWeb implements FirebaseAuthOAuth {
     if (customOAuthParameters != null) {
       oAuthProvider.setCustomParameters(customOAuthParameters);
     }
-    await web.app(_app.name).auth().signInWithPopup(oAuthProvider);
-    return FirebaseAuth.instanceFor(app: _app).currentUser;
+    await web.app(_app().name).auth().signInWithPopup(oAuthProvider);
+    return FirebaseAuth.instanceFor(app: _app()).currentUser;
   }
 
   @override
@@ -38,12 +43,12 @@ class FirebaseAuthOAuthWeb implements FirebaseAuthOAuth {
     if (customOAuthParameters != null) {
       oAuthProvider.setCustomParameters(customOAuthParameters);
     }
-    if (FirebaseAuth.instanceFor(app: _app).currentUser == null) {
+    if (FirebaseAuth.instanceFor(app: _app()).currentUser == null) {
       return Future.error(StateError(
           "currentUser is nil. Make sure a user exists when linkExistingUserWithCredentials is used"));
     }
-    await web.app(_app.name).auth().currentUser?.linkWithPopup(oAuthProvider);
-    return FirebaseAuth.instanceFor(app: _app).currentUser;
+    await web.app(_app().name).auth().currentUser?.linkWithPopup(oAuthProvider);
+    return FirebaseAuth.instanceFor(app: _app()).currentUser;
   }
 
   @override
