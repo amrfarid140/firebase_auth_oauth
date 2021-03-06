@@ -2,7 +2,7 @@ name: firebase_auth_oauth_web
 description: Web implementation for `firebase_auth_oauth`.  Don't use directly. Instead import `firebase_auth_oauth` plugin.
 version: 0.2.2
 homepage: https://github.com/amrfarid140/firebase_auth_oauth/tree/master/firebase_auth_oauth_web
-
+publish_to: none
 environment:
   sdk: ">=2.2.2 <3.0.0"
   flutter: ">=1.10.0 <2.0.0"
@@ -12,12 +12,12 @@ dependencies:
     sdk: flutter
   flutter_web_plugins:
     sdk: flutter
-  firebase: ^8.0.0
-  firebase_auth: ^0.21.0-nullsafety.0
-  firebase_core: ^0.8.0-nullsafety.1
+  firebase: ^9.0.0
+  firebase_auth: ^1.0.0
+  firebase_core: ^1.0.0
   firebase_auth_oauth_platform_interface:
-    path: ../firebase_auth_oauth_platform_interface
-  js: ^0.6.2
+    path: "../firebase_auth_oauth_platform_interface"
+  js: ^0.6.3
 
 dev_dependencies:
   flutter_test:
