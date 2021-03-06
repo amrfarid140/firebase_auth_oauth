@@ -7,4 +7,4 @@
 build/
 *.iml
 .flutter-plugins
-
+*.lock
