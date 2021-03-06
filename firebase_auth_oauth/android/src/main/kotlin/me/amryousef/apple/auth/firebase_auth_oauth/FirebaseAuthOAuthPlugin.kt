@@ -84,24 +84,16 @@ class FirebaseAuthOAuthPlugin : FlutterPlugin, ActivityAware, MethodCallHandler 
                 FirebaseAuthOAuthPluginError
                     .FirebaseAuthError(error)
                     .toResult(result)
-            } ?: auth.startActivityForSignInWithProvider(it, provider)
-                .addOnSuccessListener { authResult ->
-                    if (call.method == CREATE_USER_METHOD) {
-                        result.success("")
-                        return@addOnSuccessListener
-                    } else if (call.method == LINK_USER_METHOD) {
-                        val user = auth.currentUser
-                        if (user == null) {
-                            FirebaseAuthOAuthPluginError.PluginError(
-                                ""
-                            ).toResult(result)
-                        }
-                        user?.linkWithCredential(authResult.credential!!)
-                    }
+            } ?: run {
+                val task = call.method.toSignInTask(provider, auth, result)
+                task.addOnSuccessListener {
+                    result.success("")
+                    return@addOnSuccessListener
                 }.addOnFailureListener { error ->
-                FirebaseAuthOAuthPluginError
-                    .FirebaseAuthError(error)
-                    .toResult(result)
+                    FirebaseAuthOAuthPluginError
+                        .FirebaseAuthError(error)
+                        .toResult(result)
+                }
             }
         }
     }
@@ -124,4 +116,29 @@ class FirebaseAuthOAuthPlugin : FlutterPlugin, ActivityAware, MethodCallHandler 
     override fun onDetachedFromActivityForConfigChanges() {
         activity = null
     }
+
+    private fun String.toSignInTask(
+        provider: OAuthProvider,
+        auth: FirebaseAuth,
+        result: Result
+    ) = activity?.let {
+        when (this) {
+            LINK_USER_METHOD -> {
+                val user = auth.currentUser
+                if (user == null) {
+                    FirebaseAuthOAuthPluginError.PluginError(
+                        ""
+                    ).toResult(result)
+                }
+                user!!.startActivityForLinkWithProvider(it, provider)
+            }
+            CREATE_USER_METHOD -> {
+                auth.startActivityForSignInWithProvider(it, provider)
+            }
+            else -> {
+                FirebaseAuthOAuthPluginError.PluginError("Unknown method called")
+                com.google.android.gms.tasks.Tasks.forCanceled()
+            }
+        }
+    } ?: com.google.android.gms.tasks.Tasks.forCanceled()
 }
