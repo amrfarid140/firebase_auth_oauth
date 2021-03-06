@@ -19,8 +19,8 @@ class FirebaseAuthOAuth {
   /// Starts a OAuth sign-in flow for [provider]
   /// using Firebase. The instance of FirebaseAuth will be from the default Firebase App
   /// Unless [withApp] is used to build an instance
-  Future<User> openSignInFlow(String provider, List<String> scopes,
-      [Map<String, String> customOAuthParameters]) async {
+  Future<User?> openSignInFlow(String provider, List<String> scopes,
+      [Map<String, String>? customOAuthParameters]) async {
     throw UnimplementedError("openSignInFlow() is not implemented");
   }
 
@@ -29,9 +29,9 @@ class FirebaseAuthOAuth {
   /// Unless [withApp] is used to build an instance.
   /// The credentials will be added to the existing Firebase [User]
   /// An error will be throw if there's no Firebase [User]
-  Future<User> linkExistingUserWithCredentials(
+  Future<User?> linkExistingUserWithCredentials(
       String provider, List<String> scopes,
-      [Map<String, String> customOAuthParameters]) async {
+      [Map<String, String>? customOAuthParameters]) async {
     throw UnimplementedError(
         "linkExistingUserWithCredentials() is not implemented");
   }
