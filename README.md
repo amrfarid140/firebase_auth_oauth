@@ -18,9 +18,9 @@ OAuth flows are performed by opening pop-up on top of the application to allow t
 dependencies:
   flutter:
     sdk: flutter
-  firebase_auth: ^1.0.0
-  firebase_core: ^1.0.0
-  firebase_auth_oauth: ^1.0.1
+  firebase_auth: ^2.0.0
+  firebase_core: ^1.3.0
+  firebase_auth_oauth: ^1.0.2
 ```
 
 - Then in your project just call
@@ -30,7 +30,6 @@ dependencies:
 FirebaseUser user = await FirebaseAuthOAuth().openSignInFlow("A provider ID", [list of scopes], {custom parameters map});
 
 // Sign-in by Apple example
-
 User user = await FirebaseAuthOAuth()
           .openSignInFlow("apple.com", ["email"], {"locale": "en"});
 
