@@ -1,4 +1,8 @@
-# 1.0.1
+## 1.0.2
+* Updated `firebase_auth` to Version ^2.0.0
+* Updated `firebase_core` to Version ^1.3.0
+
+## 1.0.1
 
 * Fixed `linkExistingUserWithCredentials` to avoid creating two users on Firebase. Thanks to @tiagocavalli & @mateusfccp
   .
