@@ -94,7 +94,6 @@ class FirebaseAuthOAuthPlugin : FlutterPlugin, ActivityAware, MethodCallHandler 
                         if (credential is OAuthCredential) {
                             result.success(mapOf(
                                 "providerId" to authResult.getCredential()?.getProvider(),
-                                "signInMethod" to authResult.getCredential()?.getSignInMethod(),
                                 "accessToken" to credential.getAccessToken(),
                                 "idToken" to credential.getIdToken(),
                                 "secret" to credential.getSecret()
@@ -102,7 +101,6 @@ class FirebaseAuthOAuthPlugin : FlutterPlugin, ActivityAware, MethodCallHandler 
                         } else {
                             result.success(mapOf(
                                 "providerId" to authResult.getCredential()?.getProvider(),
-                                "signInMethod" to authResult.getCredential()?.getSignInMethod()
                             ))
                         }
                     }

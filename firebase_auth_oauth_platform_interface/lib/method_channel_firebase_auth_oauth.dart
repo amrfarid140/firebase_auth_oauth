@@ -27,8 +27,8 @@ class MethodChannelFirebaseAuthOAuth extends FirebaseAuthOAuth {
         'parameters': json.encode(customOAuthParameters)
     });
     _credential = OAuthCredential(
+      signInMethod: "oauth",
       providerId: data?["providerId"] ?? "",
-      signInMethod: data?["providerId"] ?? "",
       accessToken: data?["accessToken"] ?? "",
       idToken: data?["idToken"] ?? "",
       secret: data?["secret"] ?? "",
@@ -41,13 +41,22 @@ class MethodChannelFirebaseAuthOAuth extends FirebaseAuthOAuth {
   Future<User?> linkExistingUserWithCredentials(
       String provider, List<String> scopes,
       [Map<String, String>? customOAuthParameters]) async {
-    await _channel.invokeMethod("linkExistingUserWithCredentials", {
+    final data =
+        await _channel.invokeMethod("linkExistingUserWithCredentials", {
       'provider': provider,
       'app': _app.name,
       'scopes': json.encode(scopes),
       if (customOAuthParameters != null)
         'parameters': json.encode(customOAuthParameters)
     });
+    _credential = OAuthCredential(
+      signInMethod: "oauth",
+      providerId: data?["providerId"] ?? "",
+      accessToken: data?["accessToken"] ?? "",
+      idToken: data?["idToken"] ?? "",
+      secret: data?["secret"] ?? "",
+      rawNonce: data?["rawNonce"] ?? "",
+    );
     return FirebaseAuth.instanceFor(app: _app).currentUser;
   }
 

@@ -37,9 +37,10 @@ class FirebaseAuthOAuthWeb implements FirebaseAuthOAuth {
     }
     final result =
         await web.app(_app().name).auth().signInWithPopup(oAuthProvider);
+
     _credential = OAuthCredential(
+      signInMethod: "oauth",
       providerId: result.credential.providerId,
-      signInMethod: result.credential.signInMethod,
       accessToken: result.credential.accessToken,
       idToken: result.credential.idToken,
       secret: result.credential.secret,
@@ -60,7 +61,19 @@ class FirebaseAuthOAuthWeb implements FirebaseAuthOAuth {
       return Future.error(StateError(
           "currentUser is nil. Make sure a user exists when linkExistingUserWithCredentials is used"));
     }
-    await web.app(_app().name).auth().currentUser?.linkWithPopup(oAuthProvider);
+    final result = await web
+        .app(_app().name)
+        .auth()
+        .currentUser
+        ?.linkWithPopup(oAuthProvider);
+
+    _credential = OAuthCredential(
+      signInMethod: "oauth",
+      providerId: result?.credential.providerId ?? "",
+      accessToken: result?.credential.accessToken,
+      idToken: result?.credential.idToken,
+      secret: result?.credential.secret,
+    );
     return FirebaseAuth.instanceFor(app: _app()).currentUser;
   }
 

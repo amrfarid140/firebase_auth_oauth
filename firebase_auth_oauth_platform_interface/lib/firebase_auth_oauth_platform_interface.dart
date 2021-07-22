@@ -16,7 +16,7 @@ class FirebaseAuthOAuth {
 
   FirebaseAuthOAuth._();
 
-  /// After openSignInFlow the result [OAuthCredential] can be found in this method.
+  /// Get authentication result [OAuthCredential] after [openSignInFlow] or [linkExistingUserWithCredentials] call.
   /// If supported by Firebase, this will contains the provider access token as [accessToken].
   OAuthCredential? get credential =>
       throw UnimplementedError("credential is not implemented");
