@@ -4,6 +4,8 @@ part of firebase_apple_auth_platform_interface;
 class MethodChannelFirebaseAuthOAuth extends FirebaseAuthOAuth {
   FirebaseApp _app;
 
+  OAuthCredential? _credential;
+
   static const MethodChannel _channel =
       const MethodChannel('me.amryousef.apple.auth/firebase_auth_oauth');
 
@@ -12,15 +14,26 @@ class MethodChannelFirebaseAuthOAuth extends FirebaseAuthOAuth {
         super._();
 
   @override
+  OAuthCredential? get credential => this._credential;
+
+  @override
   Future<User?> openSignInFlow(String provider, List<String> scopes,
       [Map<String, String>? customOAuthParameters]) async {
-    await _channel.invokeMethod("openSignInFlow", {
+    final data = await _channel.invokeMethod("openSignInFlow", {
       'provider': provider,
       'app': _app.name,
       'scopes': json.encode(scopes),
       if (customOAuthParameters != null)
         'parameters': json.encode(customOAuthParameters)
     });
+    _credential = OAuthCredential(
+      providerId: data?["providerId"] ?? "",
+      signInMethod: data?["providerId"] ?? "",
+      accessToken: data?["accessToken"] ?? "",
+      idToken: data?["idToken"] ?? "",
+      secret: data?["secret"] ?? "",
+      rawNonce: data?["rawNonce"] ?? "",
+    );
     return FirebaseAuth.instanceFor(app: _app).currentUser;
   }
 

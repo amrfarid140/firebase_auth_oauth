@@ -16,6 +16,11 @@ class FirebaseAuthOAuth {
 
   FirebaseAuthOAuth._();
 
+  /// After openSignInFlow the result [OAuthCredential] can be found in this method.
+  /// If supported by Firebase, this will contains the provider access token as [accessToken].
+  OAuthCredential? get credential =>
+      throw UnimplementedError("credential is not implemented");
+
   /// Starts a OAuth sign-in flow for [provider]
   /// using Firebase. The instance of FirebaseAuth will be from the default Firebase App
   /// Unless [withApp] is used to build an instance

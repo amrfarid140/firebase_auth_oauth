@@ -14,6 +14,9 @@ class FirebaseAuthOAuth implements platform.FirebaseAuthOAuth {
             : platform.FirebaseAuthOAuth.instance;
 
   @override
+  OAuthCredential? get credential => _delegate.credential;
+
+  @override
   Future<User?> openSignInFlow(String provider, List<String> scopes,
           [Map<String, String>? customOAuthParameters]) =>
       _delegate.openSignInFlow(provider, scopes, customOAuthParameters);
