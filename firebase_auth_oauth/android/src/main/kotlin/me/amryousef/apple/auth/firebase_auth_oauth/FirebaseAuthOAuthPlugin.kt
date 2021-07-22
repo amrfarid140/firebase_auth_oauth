@@ -100,7 +100,7 @@ class FirebaseAuthOAuthPlugin : FlutterPlugin, ActivityAware, MethodCallHandler 
                             ))
                         } else {
                             result.success(mapOf(
-                                "providerId" to authResult.getCredential()?.getProvider(),
+                                "providerId" to authResult.getCredential()?.getProvider()
                             ))
                         }
                     }
