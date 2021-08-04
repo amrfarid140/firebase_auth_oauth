@@ -14,9 +14,6 @@ class FirebaseAuthOAuth implements platform.FirebaseAuthOAuth {
             : platform.FirebaseAuthOAuth.instance;
 
   @override
-  OAuthCredential? get credential => _delegate.credential;
-
-  @override
   Future<User?> openSignInFlow(String provider, List<String> scopes,
           [Map<String, String>? customOAuthParameters]) =>
       _delegate.openSignInFlow(provider, scopes, customOAuthParameters);
@@ -27,6 +24,16 @@ class FirebaseAuthOAuth implements platform.FirebaseAuthOAuth {
           [Map<String, String>? customOAuthParameters]) =>
       _delegate.linkExistingUserWithCredentials(
           provider, scopes, customOAuthParameters);
+
+  @override
+  Future<OAuthCredential> signInOAuth(String provider, List<String> scopes,
+          [Map<String, String>? customOAuthParameters]) =>
+      _delegate.signInOAuth(provider, scopes, customOAuthParameters);
+
+  @override
+  Future<OAuthCredential> linkWithOAuth(String provider, List<String> scopes,
+          [Map<String, String>? customOAuthParameters]) =>
+      _delegate.linkWithOAuth(provider, scopes, customOAuthParameters);
 
   @override
   platform.FirebaseAuthOAuth withApp(FirebaseApp app) =>

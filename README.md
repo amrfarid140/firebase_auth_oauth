@@ -37,9 +37,10 @@ User user = await FirebaseAuthOAuth()
 User user = await FirebaseAuthOAuth()
           .linkExistingUserWithCredentials("apple.com", ["email"], {"locale": "en"});
 
-// You can fetch provider auth result with [credential] parameter
-final oauth = await FirebaseAuthOAuth();
-OAuthCredential credential = oauth.credential;
+// Or if the OAuth credential result is needed, you can fetch provider auth result with one of the following
+OAuthCredential credential = await FirebaseAuthOAuth().signInOAuth("apple.com", ["email"], {"locale": "en"});
+OAuthCredential credential = await FirebaseAuthOAuth().linkWithOAuth("apple.com", ["email"], {"locale": "en"});
+USer user = FirebaseAuth.instance.currentUser;
 
 ```
 Checkout [the example Widget](https://github.com/amrfarid140/firebase_auth_oauth/blob/main/firebase_auth_oauth/example/lib/main.dart).

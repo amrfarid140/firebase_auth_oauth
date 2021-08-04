@@ -1,3 +1,8 @@
+## 1.0.2
+* Added `signInOAuth` and `linkWithOAuth`
+* Updated `firebase_auth` to Version ^3.0.1
+* Updated `firebase_core` to Version ^1.4.0
+
 ## 1.0.1
 * Updated `firebase_auth` to Version ^2.0.0
 * Updated `firebase_core` to Version ^1.3.0

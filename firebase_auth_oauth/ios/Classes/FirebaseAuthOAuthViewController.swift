@@ -3,9 +3,8 @@ import UIKit
 import FirebaseAuth
 
 public class FirebaseAuthOAuthViewController: UIViewController, FlutterPlugin {
-	
-	private static let CREATE_USER_METHOD = "openSignInFlow"
-	private static let LINK_USER_METHOD = "linkExistingUserWithCredentials"
+	private static let CREATE_USER_METHOD = "signInOAuth"
+	private static let LINK_USER_METHOD = "linkWithOAuth"
 	
 	internal var currentNonce: String?
 	private var call: FlutterMethodCall?

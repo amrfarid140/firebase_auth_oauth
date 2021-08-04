@@ -10,8 +10,6 @@ typedef _AppProvider = FirebaseApp Function();
 class FirebaseAuthOAuthWeb implements FirebaseAuthOAuth {
   _AppProvider _app = () => Firebase.app();
 
-  OAuthCredential? _credential;
-
   /// Register this implementation as the default [FirebaseAuthOAuth] instance
   /// Shouldn't be used inside a project. It is automatically invoked by Flutter build system.
   static void registerWith(Registrar registrar) {
@@ -25,9 +23,6 @@ class FirebaseAuthOAuthWeb implements FirebaseAuthOAuth {
   }
 
   @override
-  OAuthCredential? get credential => _credential;
-
-  @override
   Future<User?> openSignInFlow(String provider, List<String> scopes,
       [Map<String, String>? customOAuthParameters]) async {
     final oAuthProvider = web.OAuthProvider(provider);
@@ -35,16 +30,7 @@ class FirebaseAuthOAuthWeb implements FirebaseAuthOAuth {
     if (customOAuthParameters != null) {
       oAuthProvider.setCustomParameters(customOAuthParameters);
     }
-    final result =
-        await web.app(_app().name).auth().signInWithPopup(oAuthProvider);
-
-    _credential = OAuthCredential(
-      signInMethod: "oauth",
-      providerId: result.credential.providerId,
-      accessToken: result.credential.accessToken,
-      idToken: result.credential.idToken,
-      secret: result.credential.secret,
-    );
+    await web.app(_app().name).auth().signInWithPopup(oAuthProvider);
     return FirebaseAuth.instanceFor(app: _app()).currentUser;
   }
 
@@ -61,20 +47,55 @@ class FirebaseAuthOAuthWeb implements FirebaseAuthOAuth {
       return Future.error(StateError(
           "currentUser is nil. Make sure a user exists when linkExistingUserWithCredentials is used"));
     }
+    await web.app(_app().name).auth().currentUser?.linkWithPopup(oAuthProvider);
+    return FirebaseAuth.instanceFor(app: _app()).currentUser;
+  }
+
+  @override
+  Future<OAuthCredential> signInOAuth(String provider, List<String> scopes,
+      [Map<String, String>? customOAuthParameters]) async {
+    final oAuthProvider = web.OAuthProvider(provider);
+    scopes.forEach((scope) => oAuthProvider.addScope(scope));
+    if (customOAuthParameters != null) {
+      oAuthProvider.setCustomParameters(customOAuthParameters);
+    }
+    final result =
+        await web.app(_app().name).auth().signInWithPopup(oAuthProvider);
+
+    return OAuthCredential(
+      signInMethod: "oauth",
+      providerId: result.credential.providerId,
+      accessToken: result.credential.accessToken,
+      idToken: result.credential.idToken,
+      secret: result.credential.secret,
+    );
+  }
+
+  @override
+  Future<OAuthCredential> linkWithOAuth(String provider, List<String> scopes,
+      [Map<String, String>? customOAuthParameters]) async {
+    final oAuthProvider = web.OAuthProvider(provider);
+    scopes.forEach((scope) => oAuthProvider.addScope(scope));
+    if (customOAuthParameters != null) {
+      oAuthProvider.setCustomParameters(customOAuthParameters);
+    }
+    if (FirebaseAuth.instanceFor(app: _app()).currentUser == null) {
+      return Future.error(StateError(
+          "currentUser is nil. Make sure a user exists when linkWithOAuth is used"));
+    }
     final result = await web
         .app(_app().name)
         .auth()
         .currentUser
         ?.linkWithPopup(oAuthProvider);
 
-    _credential = OAuthCredential(
+    return OAuthCredential(
       signInMethod: "oauth",
       providerId: result?.credential.providerId ?? "",
       accessToken: result?.credential.accessToken,
       idToken: result?.credential.idToken,
       secret: result?.credential.secret,
     );
-    return FirebaseAuth.instanceFor(app: _app()).currentUser;
   }
 
   @override

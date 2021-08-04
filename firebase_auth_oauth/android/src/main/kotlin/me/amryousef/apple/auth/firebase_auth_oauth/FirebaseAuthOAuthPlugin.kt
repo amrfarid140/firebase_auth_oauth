@@ -33,8 +33,8 @@ class FirebaseAuthOAuthPlugin : FlutterPlugin, ActivityAware, MethodCallHandler 
     }
 
     companion object {
-        private const val CREATE_USER_METHOD = "openSignInFlow"
-        private const val LINK_USER_METHOD = "linkExistingUserWithCredentials"
+        private const val CREATE_USER_METHOD = "signInOAuth"
+        private const val LINK_USER_METHOD = "linkWithOAuth"
 
         @Suppress("unused", "deprecation")
         @JvmStatic
