@@ -5,6 +5,8 @@ import androidx.annotation.NonNull
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.OAuthProvider
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.OAuthCredential
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -31,8 +33,8 @@ class FirebaseAuthOAuthPlugin : FlutterPlugin, ActivityAware, MethodCallHandler 
     }
 
     companion object {
-        private const val CREATE_USER_METHOD = "openSignInFlow"
-        private const val LINK_USER_METHOD = "linkExistingUserWithCredentials"
+        private const val CREATE_USER_METHOD = "signInOAuth"
+        private const val LINK_USER_METHOD = "linkWithOAuth"
 
         @Suppress("unused", "deprecation")
         @JvmStatic
@@ -86,10 +88,23 @@ class FirebaseAuthOAuthPlugin : FlutterPlugin, ActivityAware, MethodCallHandler 
                     .toResult(result)
             } ?: run {
                 val task = call.method.toSignInTask(provider, auth, result)
-                task.addOnSuccessListener {
-                    result.success("")
-                    return@addOnSuccessListener
-                }.addOnFailureListener { error ->
+                task.addOnSuccessListener(
+                    fun (authResult: AuthResult) {
+                        val credential = authResult.getCredential()
+                        if (credential is OAuthCredential) {
+                            result.success(mapOf(
+                                "providerId" to authResult.getCredential()?.getProvider(),
+                                "accessToken" to credential.getAccessToken(),
+                                "idToken" to credential.getIdToken(),
+                                "secret" to credential.getSecret()
+                            ))
+                        } else {
+                            result.success(mapOf(
+                                "providerId" to authResult.getCredential()?.getProvider()
+                            ))
+                        }
+                    }
+                ).addOnFailureListener { error ->
                     FirebaseAuthOAuthPluginError
                         .FirebaseAuthError(error)
                         .toResult(result)

@@ -3,9 +3,8 @@ import UIKit
 import FirebaseAuth
 
 public class FirebaseAuthOAuthViewController: UIViewController, FlutterPlugin {
-	
-	private static let CREATE_USER_METHOD = "openSignInFlow"
-	private static let LINK_USER_METHOD = "linkExistingUserWithCredentials"
+	private static let CREATE_USER_METHOD = "signInOAuth"
+	private static let LINK_USER_METHOD = "linkWithOAuth"
 	
 	internal var currentNonce: String?
 	private var call: FlutterMethodCall?
@@ -58,7 +57,7 @@ public class FirebaseAuthOAuthViewController: UIViewController, FlutterPlugin {
 							.FirebaseAuthError(error: firebaseError)
 					)
 				}
-				self.finalizeResult(currentUser)
+				self.finalizeResult(authResult, currentUser)
 			}
 		}
 		if call?.method == FirebaseAuthOAuthViewController.LINK_USER_METHOD {
@@ -66,31 +65,52 @@ public class FirebaseAuthOAuthViewController: UIViewController, FlutterPlugin {
 				self.finalizeResult(.PluginError(error: "currentUser is nil. Make sure a user exists when \(FirebaseAuthOAuthViewController.LINK_USER_METHOD) is used."))
 				return
 			}
-			currentUser.link(with: credential) { (result, error) in
+			currentUser.link(with: credential) { (authResult, error) in
                 if let firebaseError = error {
                     self.finalizeResult(
                         FirebaseAuthOAuthPluginError
                             .FirebaseAuthError(error: firebaseError)
                     )
                 }
-                if result != nil {
-                    self.finalizeResult(currentUser)
+                if authResult != nil {
+                    self.finalizeResult(authResult, currentUser)
                 }
 			}
 		}
 	}
 	
 	func finalizeResult(_ error: FirebaseAuthOAuthPluginError) {
-		finalizeResult(user: nil, error: error)
+		finalizeResult(authResult: nil, user: nil, error: error)
 	}
 	
 	func finalizeResult(_ user: User) {
-		finalizeResult(user: user, error: nil)
+		finalizeResult(authResult: nil, user: user, error: nil)
+	}
+
+	func finalizeResult(_ authResult: AuthDataResult?, _ user: User) {
+		finalizeResult(authResult: authResult, user: user, error: nil)
 	}
 	
-	private func finalizeResult(user: User?, error: FirebaseAuthOAuthPluginError?) {
+	private func finalizeResult(authResult: AuthDataResult?, user: User?, error: FirebaseAuthOAuthPluginError?) {
 		if user != nil {
-			result?("")
+			if authResult != nil {
+				let credential = authResult!.credential
+				if credential is OAuthCredential {
+                    let oauthCredential = credential as! OAuthCredential?
+					result?([
+						"providerId": authResult?.credential?.provider,
+						"accessToken": oauthCredential?.accessToken,
+						"idToken": oauthCredential?.idToken,
+						"secret": oauthCredential?.secret
+					])
+				} else {
+					result?([
+						"providerId": authResult?.credential?.provider
+					])
+				}
+			} else {
+				result?(nil)
+			}
 		}
 		
 		if error != nil {

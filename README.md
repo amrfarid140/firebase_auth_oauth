@@ -18,9 +18,9 @@ OAuth flows are performed by opening pop-up on top of the application to allow t
 dependencies:
   flutter:
     sdk: flutter
-  firebase_auth: ^2.0.0
-  firebase_core: ^1.3.0
-  firebase_auth_oauth: ^1.0.2
+  firebase_auth: ^3.0.1
+  firebase_core: ^1.4.0
+  firebase_auth_oauth: ^1.0.3
 ```
 
 - Then in your project just call
@@ -36,6 +36,12 @@ User user = await FirebaseAuthOAuth()
 // Or you can link an existing logged-in user
 User user = await FirebaseAuthOAuth()
           .linkExistingUserWithCredentials("apple.com", ["email"], {"locale": "en"});
+
+// Or if the OAuth credential result is needed, you can fetch provider auth result with one of the following
+OAuthCredential credential = await FirebaseAuthOAuth().signInOAuth("apple.com", ["email"], {"locale": "en"});
+OAuthCredential credential = await FirebaseAuthOAuth().linkWithOAuth("apple.com", ["email"], {"locale": "en"});
+USer user = FirebaseAuth.instance.currentUser;
+
 ```
 Checkout [the example Widget](https://github.com/amrfarid140/firebase_auth_oauth/blob/main/firebase_auth_oauth/example/lib/main.dart).
 

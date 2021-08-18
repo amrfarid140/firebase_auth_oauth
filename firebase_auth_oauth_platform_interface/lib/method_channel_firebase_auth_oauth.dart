@@ -14,7 +14,7 @@ class MethodChannelFirebaseAuthOAuth extends FirebaseAuthOAuth {
   @override
   Future<User?> openSignInFlow(String provider, List<String> scopes,
       [Map<String, String>? customOAuthParameters]) async {
-    await _channel.invokeMethod("openSignInFlow", {
+    await _channel.invokeMethod("signInOAuth", {
       'provider': provider,
       'app': _app.name,
       'scopes': json.encode(scopes),
@@ -28,7 +28,7 @@ class MethodChannelFirebaseAuthOAuth extends FirebaseAuthOAuth {
   Future<User?> linkExistingUserWithCredentials(
       String provider, List<String> scopes,
       [Map<String, String>? customOAuthParameters]) async {
-    await _channel.invokeMethod("linkExistingUserWithCredentials", {
+    await _channel.invokeMethod("linkWithOAuth", {
       'provider': provider,
       'app': _app.name,
       'scopes': json.encode(scopes),
@@ -36,6 +36,46 @@ class MethodChannelFirebaseAuthOAuth extends FirebaseAuthOAuth {
         'parameters': json.encode(customOAuthParameters)
     });
     return FirebaseAuth.instanceFor(app: _app).currentUser;
+  }
+
+  @override
+  Future<OAuthCredential> signInOAuth(String provider, List<String> scopes,
+      [Map<String, String>? customOAuthParameters]) async {
+    final data = await _channel.invokeMethod("signInOAuth", {
+      'provider': provider,
+      'app': _app.name,
+      'scopes': json.encode(scopes),
+      if (customOAuthParameters != null)
+        'parameters': json.encode(customOAuthParameters)
+    });
+    return OAuthCredential(
+      signInMethod: "oauth",
+      providerId: data?["providerId"] ?? "",
+      accessToken: data?["accessToken"] ?? "",
+      idToken: data?["idToken"] ?? "",
+      secret: data?["secret"] ?? "",
+      rawNonce: data?["rawNonce"] ?? "",
+    );
+  }
+
+  @override
+  Future<OAuthCredential> linkWithOAuth(String provider, List<String> scopes,
+      [Map<String, String>? customOAuthParameters]) async {
+    final data = await _channel.invokeMethod("linkWithOAuth", {
+      'provider': provider,
+      'app': _app.name,
+      'scopes': json.encode(scopes),
+      if (customOAuthParameters != null)
+        'parameters': json.encode(customOAuthParameters)
+    });
+    return OAuthCredential(
+      signInMethod: "oauth",
+      providerId: data?["providerId"] ?? "",
+      accessToken: data?["accessToken"] ?? "",
+      idToken: data?["idToken"] ?? "",
+      secret: data?["secret"] ?? "",
+      rawNonce: data?["rawNonce"] ?? "",
+    );
   }
 
   @override
