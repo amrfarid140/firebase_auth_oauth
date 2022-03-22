@@ -29,3 +29,8 @@ flutter:
         pluginClass: FirebaseAuthOAuthPlugin
       web:
         default_package: firebase_apple_auth_web
+
+false_secrets:
+  - /example/android/app/google-services.json
+  - /example/ios/Runner/GoogleService-Info.plist
+  - /example/web/index.html
