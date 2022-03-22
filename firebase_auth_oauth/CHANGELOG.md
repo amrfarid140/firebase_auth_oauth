@@ -1,3 +1,7 @@
+## 1.1.0+1
+
+* Updated Android Example
+
 ## 1.1.0
 
 * set minimum iOS version to 11.4
