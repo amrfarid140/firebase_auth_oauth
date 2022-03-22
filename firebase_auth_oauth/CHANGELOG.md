@@ -1,3 +1,8 @@
+## 1.2.0
+
+* **[Breaking Change]** Update minimum flutter version to `1.20.0`
+* Use latest `_web` plugin version
+
 ## 1.1.0+1
 
 * Updated Android Example

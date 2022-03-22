@@ -1,9 +1,16 @@
+## 1.1.0
+
+* **[Breaking Change]** Update minimum flutter version to `1.20.0`
+* Remove unused android and iOS sample code
+
 ## 1.0.2
+
 * Added `signInOAuth` and `linkWithOAuth`
 * Updated `firebase_auth` to Version ^3.0.1
 * Updated `firebase_core` to Version ^1.4.0
 
 ## 1.0.1
+
 * Updated `firebase_auth` to Version ^2.0.0
 * Updated `firebase_core` to Version ^1.3.0
 * Updated `firebase` to Version ^9.0.1
