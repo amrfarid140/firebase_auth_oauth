@@ -8,7 +8,17 @@ import 'package:flutter/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: FirebaseOptions(
+      apiKey: "AIzaSyDiSdrRegqkVpOAeC9qgjj43e_1jO9PIN0",
+      authDomain: "testfirestore-fd7e2.firebaseapp.com",
+      databaseURL: "https://testfirestore-fd7e2.firebaseio.com",
+      projectId: "testfirestore-fd7e2",
+      storageBucket: "testfirestore-fd7e2.appspot.com",
+      messagingSenderId: "719377316001",
+      appId: "1:719377316001:web:a9d3a2db8fceaa2e21d8e0",
+    ),
+  );
   runApp(MyApp());
 }
 
