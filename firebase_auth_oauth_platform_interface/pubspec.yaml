@@ -2,7 +2,7 @@ name: firebase_auth_oauth_platform_interface
 description: Platform interface plugin for firebase_auth_oauth. This includes
   API definition which will be implemented for android, ios and web.
 version: 1.0.3
-homepage: https://github.com/amrfarid140/firebase_auth_oauth/tree/master/firebase_auth_oauth_platform_interface
+homepage: https://github.com/amrfarid140/firebase_auth_oauth/tree/main/firebase_auth_oauth_platform_interface
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
