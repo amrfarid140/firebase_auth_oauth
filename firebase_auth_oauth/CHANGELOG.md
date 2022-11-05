@@ -1,3 +1,9 @@
+## 1.2.1
+
+* **[Breaking Change]** Update minimum iOS version to `11.4`
+* Update `firebase_auth` to Version ^4.1.1
+* Update `firebase_core` to Version ^2.1.1
+
 ## 1.2.0
 
 * **[Breaking Change]** Update minimum flutter version to `1.20.0`
