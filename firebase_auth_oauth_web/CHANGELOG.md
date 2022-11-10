@@ -1,3 +1,7 @@
+## 1.1.1
+* Updated `firebase_auth` to Version ^4.1.1
+* Updated `firebase_core` to Version ^2.1.1
+
 ## 1.1.0
 
 * **[Breaking Change]** Update minimum flutter version to `1.20.0`
