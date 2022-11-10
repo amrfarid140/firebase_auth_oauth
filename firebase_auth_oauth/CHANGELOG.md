@@ -1,3 +1,8 @@
+## 1.2.2
+* Updated `firebase_auth` to Version ^4.1.1
+* Updated `firebase_core` to Version ^2.1.1
+* Update README
+
 ## 1.2.1
 * Updated `firebase_auth` to Version ^4.1.1
 * Updated `firebase_core` to Version ^2.1.1
