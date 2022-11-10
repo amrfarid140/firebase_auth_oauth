@@ -10,10 +10,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_auth: ^3.0.1
-  firebase_core: ^1.4.0
-  firebase_auth_oauth_platform_interface: ^1.0.2
-  firebase_auth_oauth_web: ^1.1.0
+  firebase_auth: ^4.1.1
+  firebase_core: ^2.1.1
+  firebase_auth_oauth_platform_interface:
+    path: ../firebase_auth_oauth_platform_interface
+  firebase_auth_oauth_web:
+    path: ../firebase_auth_oauth_web
 
 dev_dependencies:
   flutter_test:
